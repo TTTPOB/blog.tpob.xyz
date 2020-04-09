@@ -1,4 +1,4 @@
 baseURL = "https://blog.tpob.xyz/"
-languageCode = "en-us"
-title = "My New Hugo Site"
+languageCode = "zh-cn"
+title = "TPOB's Dustbin"
 theme = "diary"
