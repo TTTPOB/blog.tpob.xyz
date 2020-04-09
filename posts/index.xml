@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on My New Hugo Site</title>
-    <link>http://example.org/posts/</link>
-    <description>Recent content in Posts on My New Hugo Site</description>
+    <title>Posts on TPOB&#39;s Dustbin</title>
+    <link>https://blog.tpob.xyz/posts/</link>
+    <description>Recent content in Posts on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-cn</language>
     <lastBuildDate>Mon, 03 Dec 2018 23:25:19 +0000</lastBuildDate>
     
-	<atom:link href="http://example.org/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>如果你想不开想要在公司集群上编译R</title>
-      <link>http://example.org/posts/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/</link>
+      <link>https://blog.tpob.xyz/posts/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/</link>
       <pubDate>Mon, 03 Dec 2018 23:25:19 +0000</pubDate>
       
-      <guid>http://example.org/posts/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/</guid>
+      <guid>https://blog.tpob.xyz/posts/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/</guid>
       <description>&lt;h1 id=&#34;如果你想不开想要在公司集群上编译r&#34;&gt;如果你想不开想要在公司集群上编译R&lt;/h1&gt;
 &lt;p&gt;我前两天做了一个让我非常痛苦的决定。&lt;br&gt;
 我们公司的集群，IO极差，删anaconda文件夹可能要删三天。&lt;br&gt;
@@ -30,10 +30,10 @@
     
     <item>
       <title>一个简陋的pubmed摘要爬虫</title>
-      <link>http://example.org/posts/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/</link>
+      <link>https://blog.tpob.xyz/posts/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/</link>
       <pubDate>Sun, 02 Dec 2018 16:29:35 +0000</pubDate>
       
-      <guid>http://example.org/posts/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/</guid>
+      <guid>https://blog.tpob.xyz/posts/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/</guid>
       <description>一个简陋的pubmed摘要爬虫 前段时间被组里布置了一个很烦人的任务，要看很多文献的摘要提取这些研究的结果，我觉得用手点实在是太麻烦了，于是想用爬虫来完成copy摘要的任务。虽然我还不会写爬虫（甚至没怎么写过python），但是都可以学的嘛。
 直接上代码，这个代码非常不pythonic，但是你要考虑到我能用就行的标准不是？：
 #!/home/tpob/miniconda3/bin/python import requests, lxml, urllib, re from bs4 import BeautifulSoup # 定义UA， 虽然pubmed好像根本没有反爬虫措施 headers = { &amp;#34;User-Agent&amp;#34;:&amp;#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36&amp;#34; } # 读进我要查的文献列表，每行一个 with open(&amp;#39;/home/tpob/paper_list.txt&amp;#39;, &amp;#39;r&amp;#39;) as paper_list: paper_names=paper_list.read().splitlines() # 等一会BeautifulSoup解析出来的元素都是标签，用这个函数方便后面map成plain text def tag_to_string(tag): return tag.text # 开文件准备往进写 with open(&amp;#39;/home/tpob/abstracts.md&amp;#39;, &amp;#39;a&amp;#39;) as abstracts_file: print(&amp;#34;# Abstracts of all papers:\n&amp;#34;, file=abstracts_file) for paper_name in paper_names: paper_name_url = { &amp;#34;term&amp;#34;:paper_name.encode(&amp;#34;utf-8&amp;#34;) } pubmed_request = requests.</description>
@@ -41,10 +41,10 @@
     
     <item>
       <title>一些小脚本</title>
-      <link>http://example.org/posts/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
+      <link>https://blog.tpob.xyz/posts/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Tue, 27 Nov 2018 22:41:37 +0000</pubDate>
       
-      <guid>http://example.org/posts/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://blog.tpob.xyz/posts/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</guid>
       <description>一些小脚本 我老是会忘掉一些好用的脚本\命令\snippet，因为并不是很常用，本地存吧又会乱，OneNote因字体问题已然放弃，就扔在这里吧。出处的话，我也不能保证是原创啦，大概只能写上Google第一条结果（
 删除[PATH]路径下所有失效软链接 删除所有软链接 find -type l -delete [PATH]删除所有失效软链接 find -L [PATH] -type l -delete&amp;ldquo;-L&amp;quot;参数表示什么我没有看懂，原作者说是追踪软连接，&amp;ndash;help说是tree。有人知道评论告知，不胜感激。
 来源：Librehat的部落格
@@ -59,10 +59,10 @@ withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&am
     
     <item>
       <title>Surface Pro 6简评</title>
-      <link>http://example.org/posts/surface_pro_6%E7%AE%80%E8%AF%84/</link>
+      <link>https://blog.tpob.xyz/posts/surface_pro_6%E7%AE%80%E8%AF%84/</link>
       <pubDate>Wed, 14 Nov 2018 10:15:33 +0000</pubDate>
       
-      <guid>http://example.org/posts/surface_pro_6%E7%AE%80%E8%AF%84/</guid>
+      <guid>https://blog.tpob.xyz/posts/surface_pro_6%E7%AE%80%E8%AF%84/</guid>
       <description>辣鸡微软 图为已经卖出的Surface Book 2。 一拖拖了十一天，今天正式开始写一写吧。
 首先介绍一下本人立场和用过的机器，曾为软粉，后认清资本家的丑恶嘴脸不再怀有感情，只是硬件确实还行继续捧场。买过几部Lumia（万恶之源），很是喜欢，后来Lumia没了；大学呢先被微软蛊惑当真以为寨版够用，购入899寨版一台，也还撑了一段时间；大一下学期正赶上SP4发售，很喜欢，找家里要钱买了（败家子）；一直用到今年三月出来实习自己攒钱加东拼西凑复又找家里要一点换了Surface Book 2 13.5 i7 8G 256G版本，其实这台机器我本来也想写个体验，但是人懒嘛，鸽掉了；再后来呢，今年10月20号，终于因为嫌沉，卖掉了SB2换了SP6。仔细想想可能亏了吧，不过Surface Book对于我来说确实是徒增累赘（我在这三四年间维护有一台“忒修斯的台式机”，目前是E5 1620 + 16G + GTX 1070的状态），还是减重来的实在。
 其实我拿到机器已经很有一段时间了，刚出不久就着急换上了，一来是终于用上了新的八代U（可惜是8250U之类少老的，不过也无妨），四核比双核强上不少；二呢就是上面说的，嫌沉；三&amp;hellip;我能告诉你是因为酒红+纯黑配色深得我心吗？
@@ -88,10 +88,10 @@ withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&am
     
     <item>
       <title>为什么湖北有这么多黄*地名</title>
-      <link>http://example.org/posts/%E5%85%B3%E4%BA%8E%E6%B9%96%E5%8C%97%E7%9A%84%E9%BB%84%E6%9F%90%E5%9C%B0%E5%90%8D/</link>
+      <link>https://blog.tpob.xyz/posts/%E5%85%B3%E4%BA%8E%E6%B9%96%E5%8C%97%E7%9A%84%E9%BB%84%E6%9F%90%E5%9C%B0%E5%90%8D/</link>
       <pubDate>Fri, 26 Oct 2018 16:15:33 +0000</pubDate>
       
-      <guid>http://example.org/posts/%E5%85%B3%E4%BA%8E%E6%B9%96%E5%8C%97%E7%9A%84%E9%BB%84%E6%9F%90%E5%9C%B0%E5%90%8D/</guid>
+      <guid>https://blog.tpob.xyz/posts/%E5%85%B3%E4%BA%8E%E6%B9%96%E5%8C%97%E7%9A%84%E9%BB%84%E6%9F%90%E5%9C%B0%E5%90%8D/</guid>
       <description>为什么湖北有这么多黄*地名 问题缘起 前些日子接机，遇到一个北京基因组所的老师，她问我哪里人我说黄冈人，她表示老乡，说是北京二代移民，原来也是这边的人。聊了一会她突然问我：“我来考一考你，为什么湖北这么多黄*地名，黄安黄陂黄梅黄冈黄石，全国其他地方没有这个样子的。我之前也问过好多人，他们给出的答案我都觉得不对，希望你能查一查然后告诉我。”。我想起几个月前翻看图书馆古地图时，最早一幅图是明朝，这些地名很多都已确定下来，我想应当有一个统一的原因，加之我觉得这个问题确实很有意思，于是答应下来。
 远离学校图书馆的悲伤 我校图书馆有大量文史藏书、各种方志、古地图集等。可惜我在外实习无法借阅，只得上网搜索。互联网资料浩如烟海鱼龙混杂，查到的许多说法都相互抵触，辨别起来十分不易。
 先从黄州开始 外事不决问Google，直接搜索黄冈地名来历得不到什么有利的信息，搜索黄州(黄冈古为县级行政单位，是黄州的州治所在)沿革得梁敢雄先生考证长文一篇(后附)，里面提到唐宋时人共识黄州春秋时为黄国之地，后加以驳斥，言应为弦国故地(考见另文，然而我并未能够找到)。此文对回答地名从何而来帮助不大，然而作者另一篇文章提到一座山叫做黄冈山，清代起，由于山上修筑声闻全城的鼓楼，改名鼓楼岗。此山及苏轼《后赤壁赋》中“过黄泥之坂”之所在，不知黄冈山和黄冈孰先孰后。查得《今县释名》中有记：“西北有黄冈山，因古黄国得名。”
@@ -139,10 +139,10 @@ References  各地名、黄夷、少昊维基百科页面 黄冈各县市地名�
     
     <item>
       <title>我为什么要把小米手环3批判一番</title>
-      <link>http://example.org/posts/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%8A%8A%E5%B0%8F%E7%B1%B3%E6%89%8B%E7%8E%AF3%E6%89%B9%E5%88%A4%E4%B8%80%E7%95%AA/</link>
+      <link>https://blog.tpob.xyz/posts/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%8A%8A%E5%B0%8F%E7%B1%B3%E6%89%8B%E7%8E%AF3%E6%89%B9%E5%88%A4%E4%B8%80%E7%95%AA/</link>
       <pubDate>Fri, 19 Oct 2018 23:43:16 +0000</pubDate>
       
-      <guid>http://example.org/posts/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%8A%8A%E5%B0%8F%E7%B1%B3%E6%89%8B%E7%8E%AF3%E6%89%B9%E5%88%A4%E4%B8%80%E7%95%AA/</guid>
+      <guid>https://blog.tpob.xyz/posts/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%8A%8A%E5%B0%8F%E7%B1%B3%E6%89%8B%E7%8E%AF3%E6%89%B9%E5%88%A4%E4%B8%80%E7%95%AA/</guid>
       <description>我为什么要把小米手环3批判一番 大家都知道今年五月底小米举行了它的八周年发布会，发布了小米8、小米手环3等等等等。米8骂得够多了，我今天来骂一骂小米手环。
 1-屏幕 你看看隔壁荣耀手环4，玻璃！玻璃！小米手环这边从有屏幕开始就一直是塑料，实在是一言难尽。手环在手上戴着不摘下来，会面临各种脏污环境，甚至比手机屏幕还容易刮花，实在是不明白为啥还是用的塑料材质。
 说完材质，继续看看隔壁荣耀，彩屏！彩屏！还有你家黑加也是彩屏，黑加也有NFC，你难道想告诉我你成本限制吗？还有你看看隔壁荣耀都支持支付宝二维码支付了，你呢？明明横过来肯定够显示一个条形码的。支付宝直接告诉我把小米手环当作沒有屏幕的设备，真是一言难尽。 然后是一如既往的频闪问题，你说你一个手环又不用调亮度闪什么闪。以及根据我在小米手环2的经验，这块屏幕多半会在一年之后烧屏到亮处几乎不可见。哦，对了，现在太阳底下也是基本看不见的。 2-奇怪的操作逻辑 上下滑切换一级页面，左右滑进入二级页面，这个设计看上去非常合理嘛，为什么要批判一番呢？因为当你左右滑动之后，并不能直接上下滑动切换大菜单。也就是说我看完消息之后想看看天气，必须得先返回才能滑动。我不知道这样会带来什么好处。
