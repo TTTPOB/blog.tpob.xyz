@@ -40,6 +40,24 @@
     loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
 </script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '7d6430b962cae7ed3df0',
+  clientSecret: 'f7e3d275d9c9861096206aa7711eb60270d6604a',
+  repo: 'blog.tpob.xyz',
+  owner: 'TTTPOB',
+  admin: ['TTTPOB'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
 
 
 
@@ -306,13 +324,13 @@ headers <span style="color:#f92672">=</span> {
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="https://blog.tpob.xyz/posts/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/">
+                <a class="newer-posts" href="https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/">
                     Next<br>如果你想不开想要在公司集群上编译R
                 </a>
                 
                 
                 
-                <a class="older-posts" href="https://blog.tpob.xyz/posts/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/">
+                <a class="older-posts" href="https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/">
                     Previous<br>一些小脚本
                 </a>
                 
@@ -320,6 +338,8 @@ headers <span style="color:#f92672">=</span> {
             <div class="post-comment-wrapper">
                 
 
+
+<div id="gitalk-container"></div>
 
 
 
