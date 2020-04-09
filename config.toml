@@ -2,3 +2,18 @@ baseURL = "https://blog.tpob.xyz/"
 languageCode = "zh-cn"
 title = "TPOB's Dustbin"
 theme = "diary"
+
+[frontmatter]
+date = [":filename", ":default"]
+
+[permalinks]
+posts = "/:year/:month/:day/:slug"
+
+[params]
+enableGitalk = true
+
+[params.gitalk]
+    owner = "TTTPOB"
+    repo = "blog.tpob.xyz"
+    client_id="7d6430b962cae7ed3df0"
+    client_secret = "f7e3d275d9c9861096206aa7711eb60270d6604a"
