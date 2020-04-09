@@ -2,6 +2,7 @@ baseURL = "https://blog.tpob.xyz/"
 languageCode = "zh-cn"
 title = "TPOB's Dustbin"
 theme = "diary"
+googleAnalytics = "UA-127821201-1"
 
 [frontmatter]
 date = [":filename", ":default"]
