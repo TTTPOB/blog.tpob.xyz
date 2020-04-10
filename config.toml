@@ -12,7 +12,7 @@ posts = "/:year/:month/:day/:slug"
 
 [params]
 enableGitalk = true
-favicon = "favicons/magic-sketchpad(3)-32x32.png"
+favicon = "https://blog.tpob.xyz/favicons/magic-sketchpad(3)-32x32.png"
 
 [params.gitalk]
     owner = "TTTPOB"
