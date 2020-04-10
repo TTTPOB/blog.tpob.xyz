@@ -12,118 +12,6 @@
     
     
         <item>
-        <title>如果你想不开想要在公司集群上编译R</title>
-        <link>https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/</link>
-        <pubDate>Mon, 03 Dec 2018 23:25:19 +0000</pubDate>
-        
-        <guid>https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/</guid>
-        <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/ -&lt;h1 id=&#34;如果你想不开想要在公司集群上编译r&#34;&gt;如果你想不开想要在公司集群上编译R&lt;/h1&gt;
-&lt;p&gt;我前两天做了一个让我非常痛苦的决定。&lt;br&gt;
-我们公司的集群，IO极差，删anaconda文件夹可能要删三天。&lt;br&gt;
-我们公司的集群，为了安全考虑，一般人没有root权限。
-我们公司的集群，不光没有root权限，软件和工具链也都完全不全。&lt;br&gt;
-所以我选择使用Anaconda当包管理器，但是一旦anaconda内部软件更新，外部依赖这些动态链接库的软件就会集体GG。比如htop、tmux(其实tmux也是我用anaconda装的)和自己装的ssh(为什么要自己装emmm，有缘再讲)。而且我平时用的最多的是R，但是R这个东西编译起来十分蛋疼所以我也用anaconda装了。&lt;br&gt;
-但是。&lt;br&gt;
-但是，anaconda里面的R版本更新特别慢，包的更新也特别慢，而且anaconda处理依赖的时候有我无法看出规律的诡异升级和降级过程，导致经常装一个新包的时候告诉你R要降级。&lt;/p&gt;
-&lt;h2 id=&#34;那就自己编译一个r&#34;&gt;那就自己编译一个R！&lt;/h2&gt;
-&lt;p&gt;好的，既然我想自己编译一个R，目的是摆脱anaconda对我的束缚。那我应该build everything from source对不对？好的，从这里开始就掉进坑里了。
-公司服务器上预装的gcc是4.4.7版本的，不能满足编译R的需要，我们需要更新gcc。记住，没有包管理器。&lt;/p&gt;
-&lt;h2 id=&#34;gcc&#34;&gt;GCC&lt;/h2&gt;
-&lt;p&gt;编译gcc的文章网上有很多，这里我们最好选择7.x（因为我用8.x被坑了，8.x有些改动是不向下兼容的，很多包会编译失败）。GCC有三个依赖，同样的，系统上的版本并不能够满足版本要求。三个依赖分别是mpc, mpfr, gmp。如果你有管理员权限请直接用包管理器。。。&lt;/p&gt;
-&lt;h2 id=&#34;被io折磨&#34;&gt;被IO折磨&lt;/h2&gt;
-&lt;p&gt;我司集群io极差，你不能想象的那种。你按下cd自动补全比手敲还慢。网速也只有1m，总之emmm。好了我们继续。&lt;br&gt;
-编译R需要readlines依赖（可选，但我建议你加上，不然用不了方向键）,我是参考这个人的&lt;a href=&#34;https://davetang.org/muse/2018/02/06/compiling-r-gnu-readline/&#34;&gt;文章&lt;/a&gt;进行编译的，他说的很清楚，把我从一个大坑里拉了出来。编译时的&lt;code&gt;LDFLAGS&lt;/code&gt;和&lt;code&gt;CPPFLAGS&lt;/code&gt;如果不写，即使你在别的什么地方指定了readline/ssl/curl，R也是不会认的。（&lt;code&gt;LD_LIBRARY_PATH&lt;/code&gt;也要写好）
-经过无数天的素质三连(&lt;code&gt;../configure blahblah&lt;/code&gt;然后&lt;code&gt;make -j50&lt;/code&gt;然后&lt;code&gt;make install&lt;/code&gt;)我往&lt;code&gt;.zshrc&lt;/code&gt;里加入了两个alias。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;alias pszll&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mkdir build_dir &amp;amp;&amp;amp; cd build_dir&amp;#34;&lt;/span&gt;
-alias szll&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;make -j50 &amp;amp;&amp;amp; make install&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;configure&lt;/code&gt;就没写进去了，毕竟那么多参数要改。&lt;br&gt;
-好的，由于集群的io问题，我等待了半天(实指)后终于装好了。&lt;br&gt;
-加入环境变量，设好&lt;code&gt;R_LIBS_USER&lt;/code&gt;作为自己以后装包的目录(强烈推荐，这样你在自己装的包出问题之后可以毫无负担地删掉这个目录)
-看上去没什么问题，我表示可以启动R。&lt;/p&gt;
-&lt;h2 id=&#34;坑爹的irkernel&#34;&gt;坑爹的IRkernel&lt;/h2&gt;
-&lt;p&gt;由于我最终还是要在Jupyter lab里面使用R的，于是手动安装一个IRkernel。一切正常，直到我发现在jupyter里面执行任何代码都会导致kernel died（&lt;br&gt;
-我发现它报的错误是跟x有关，遂查到&lt;a href=&#34;https://github.com/IRkernel/IRkernel/issues/388&#34;&gt;这个issue&lt;/a&gt;，可是我明明是加了&lt;code&gt;--with-x=no&lt;/code&gt;的，实在不知道为什么（&lt;br&gt;
-由于时间有限加上我的工作并不是运维。。。所以我最终屈服了，使用了anaconda来安装R（好水啊这个文章图都没有）。
-当然我也有隔离我的R的！新开了一个环境里面只有R和R包的依赖，然后在要用到python的时候使用别的环境（你能想象我司辣鸡IO让我浪费了多少生命吗）。&lt;/p&gt;- https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/ - </description>
-        </item>
-    
-    
-    
-        <item>
-        <title>一个简陋的pubmed摘要爬虫</title>
-        <link>https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/</link>
-        <pubDate>Sun, 02 Dec 2018 16:29:35 +0000</pubDate>
-        
-        <guid>https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/</guid>
-        <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/ -&lt;h1 id=&#34;一个简陋的pubmed摘要爬虫&#34;&gt;一个简陋的pubmed摘要爬虫&lt;/h1&gt;
-&lt;p&gt;前段时间被组里布置了一个很烦人的任务，要看很多文献的摘要提取这些研究的结果，我觉得用手点实在是太麻烦了，于是想用爬虫来完成copy摘要的任务。虽然我还不会写爬虫（甚至没怎么写过python），但是都可以学的嘛。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;直接上代码，这个代码非常不pythonic，但是你要考虑到我能用就行的标准不是？：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/home/tpob/miniconda3/bin/python&lt;/span&gt;
-&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; requests&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; lxml&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; urllib&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; re
-&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; bs4 &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; BeautifulSoup
-&lt;span style=&#34;color:#75715e&#34;&gt;# 定义UA， 虽然pubmed好像根本没有反爬虫措施&lt;/span&gt;
-headers &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
-    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;User-Agent&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36&amp;#34;&lt;/span&gt;
-}
-&lt;span style=&#34;color:#75715e&#34;&gt;# 读进我要查的文献列表，每行一个&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/home/tpob/paper_list.txt&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;r&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; paper_list:
-    paper_names&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;paper_list&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;splitlines()
-&lt;span style=&#34;color:#75715e&#34;&gt;# 等一会BeautifulSoup解析出来的元素都是标签，用这个函数方便后面map成plain text&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;tag_to_string&lt;/span&gt;(tag):
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; tag&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text
-&lt;span style=&#34;color:#75715e&#34;&gt;# 开文件准备往进写&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/home/tpob/abstracts.md&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; abstracts_file:
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;# Abstracts of all papers:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; paper_name &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; paper_names:
-        paper_name_url &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
-            &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;term&amp;#34;&lt;/span&gt;:paper_name&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;encode(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;utf-8&amp;#34;&lt;/span&gt;)
-        }
-        pubmed_request &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://www.ncbi.nlm.nih.gov/pubmed/&amp;#34;&lt;/span&gt;, headers &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; headers, params &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; urllib&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;parse&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;urlencode(paper_name_url))
-        pubmed &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; BeautifulSoup(pubmed_request&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;lxml&amp;#39;&lt;/span&gt;)
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt;:
-        &lt;span style=&#34;color:#75715e&#34;&gt;# 下面这句的ref=re.compile......是为了防止跳进comments&lt;/span&gt;
-            paper_id &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pubmed&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;a&amp;#34;&lt;/span&gt;, href &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;compile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;^/pubmed/\d+&amp;#34;&lt;/span&gt;), ref&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;compile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;citationsensor$&amp;#34;&lt;/span&gt;))[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;href&amp;#39;&lt;/span&gt;]
-        &lt;span style=&#34;color:#75715e&#34;&gt;# 这个异常写成这个鬼样子因为我发现如果你查的文献在pubmed上只有一个匹配就会直接跳过去，而不是像下面会得到搜索结果页面，然后再点第一个。所以在这里我就直接跳过下面从搜索结果里找的步骤了。（居然没有报错，真是神奇(其实错了，但是现在是修正过的版本)）&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;except&lt;/span&gt;:
-            paper_content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pubmed_request
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
-            paper_content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://www.ncbi.nlm.nih.gov&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;paper_id)
-        paper_content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; BeautifulSoup(paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;lxml&amp;#39;&lt;/span&gt;)
-        &lt;span style=&#34;color:#75715e&#34;&gt;# 同样的你可以f12&lt;/span&gt;
-        journal_name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;, href &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#&amp;#39;&lt;/span&gt;, class_&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;)[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;]
-        paper_abstract &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;div&amp;#39;&lt;/span&gt;, class_ &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;abstr&amp;#39;&lt;/span&gt;)
-        pmid &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find_all(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;dd&amp;#39;&lt;/span&gt;, text&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;compile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;^\d{8}&amp;#34;&lt;/span&gt;))[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; paper_abstract&lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt;None:
-            abstract_sub_title&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;paper_abstract&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find_all(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;h4&amp;#39;&lt;/span&gt;)
-            abstract_text&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;paper_abstract&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find_all(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;p&amp;#39;&lt;/span&gt;)
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(paper_name)
-            abstract_for_human &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
-            abstract_for_human &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;## &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;h1&amp;#39;&lt;/span&gt;, class_&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-            &lt;span style=&#34;color:#75715e&#34;&gt;# 我知道这行代码非常不pythonic不要骂我我才刚开始学。。。然后这个的目的是，NCBI上的abstract很多是有小标题的，这样我就把每个小标题分开，得到human readable的abstract&lt;/span&gt;
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; len(abstract_sub_title)&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
-                &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(abstract_sub_title)&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;):
-                    abstract_for_human&lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;### &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;abstract_sub_title[i]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-                    abstract_for_human&lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt;abstract_text[i]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
-            &lt;span style=&#34;color:#75715e&#34;&gt;# 当然，也有很多没有小标题，底下那个map就是上面说的把标签转文字的作用啦不然没法join，list又不能直接.text&lt;/span&gt;
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
-                abstract_for_human&lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(list(map(tag_to_string ,abstract_text)))
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(abstract_for_human&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[PMID:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(pmid)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;](https://www.ncbi.nlm.nih.gov/pubmed/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(pmid)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pmid&amp;#39;&lt;/span&gt;:pmid}, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[Journal: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(journal)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;journal&amp;#39;&lt;/span&gt;:journal_name}, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
-
-        &lt;span style=&#34;color:#75715e&#34;&gt;# 你说气不气，有的连摘要都没有（后来发现是我错了）&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;## &lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; has no abstract!&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; paper_name, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[PMID:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(pmid)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;](https://www.ncbi.nlm.nih.gov/pubmed/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(pmid)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pmid&amp;#39;&lt;/span&gt;:pmid}, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[Journal: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(journal)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;journal&amp;#39;&lt;/span&gt;:journal_name}, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;好啦这个简陋的爬虫就这么几行的代码，希望大家给我提一些改进意见加一些新功能比如查影响因子什么的（如果真的有人看的话）。&lt;/p&gt;
-- https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/ - </description>
-        </item>
-    
-    
-    
-        <item>
         <title>一些小脚本</title>
         <link>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
         <pubDate>Tue, 27 Nov 2018 22:41:37 +0000</pubDate>
@@ -242,6 +130,118 @@ fi
 &lt;h2 id=&#34;linux某一个分区中的文件即使有执行权限也不能被执行&#34;&gt;Linux某一个分区中的文件即使有执行权限也不能被执行&lt;/h2&gt;
 &lt;p&gt;检查&lt;code&gt;/etc/fatab&lt;/code&gt;文件，查看这个分区的挂载属性中是否含有&lt;code&gt;noexec&lt;/code&gt;。如果有，改为&lt;code&gt;exec&lt;/code&gt;即可。&lt;/p&gt;
 - https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/ - </description>
+        </item>
+    
+    
+    
+        <item>
+        <title>如果你想不开想要在公司集群上编译R</title>
+        <link>https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/</link>
+        <pubDate>Mon, 03 Dec 2018 23:25:19 +0000</pubDate>
+        
+        <guid>https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/</guid>
+        <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/ -&lt;h1 id=&#34;如果你想不开想要在公司集群上编译r&#34;&gt;如果你想不开想要在公司集群上编译R&lt;/h1&gt;
+&lt;p&gt;我前两天做了一个让我非常痛苦的决定。&lt;br&gt;
+我们公司的集群，IO极差，删anaconda文件夹可能要删三天。&lt;br&gt;
+我们公司的集群，为了安全考虑，一般人没有root权限。
+我们公司的集群，不光没有root权限，软件和工具链也都完全不全。&lt;br&gt;
+所以我选择使用Anaconda当包管理器，但是一旦anaconda内部软件更新，外部依赖这些动态链接库的软件就会集体GG。比如htop、tmux(其实tmux也是我用anaconda装的)和自己装的ssh(为什么要自己装emmm，有缘再讲)。而且我平时用的最多的是R，但是R这个东西编译起来十分蛋疼所以我也用anaconda装了。&lt;br&gt;
+但是。&lt;br&gt;
+但是，anaconda里面的R版本更新特别慢，包的更新也特别慢，而且anaconda处理依赖的时候有我无法看出规律的诡异升级和降级过程，导致经常装一个新包的时候告诉你R要降级。&lt;/p&gt;
+&lt;h2 id=&#34;那就自己编译一个r&#34;&gt;那就自己编译一个R！&lt;/h2&gt;
+&lt;p&gt;好的，既然我想自己编译一个R，目的是摆脱anaconda对我的束缚。那我应该build everything from source对不对？好的，从这里开始就掉进坑里了。
+公司服务器上预装的gcc是4.4.7版本的，不能满足编译R的需要，我们需要更新gcc。记住，没有包管理器。&lt;/p&gt;
+&lt;h2 id=&#34;gcc&#34;&gt;GCC&lt;/h2&gt;
+&lt;p&gt;编译gcc的文章网上有很多，这里我们最好选择7.x（因为我用8.x被坑了，8.x有些改动是不向下兼容的，很多包会编译失败）。GCC有三个依赖，同样的，系统上的版本并不能够满足版本要求。三个依赖分别是mpc, mpfr, gmp。如果你有管理员权限请直接用包管理器。。。&lt;/p&gt;
+&lt;h2 id=&#34;被io折磨&#34;&gt;被IO折磨&lt;/h2&gt;
+&lt;p&gt;我司集群io极差，你不能想象的那种。你按下cd自动补全比手敲还慢。网速也只有1m，总之emmm。好了我们继续。&lt;br&gt;
+编译R需要readlines依赖（可选，但我建议你加上，不然用不了方向键）,我是参考这个人的&lt;a href=&#34;https://davetang.org/muse/2018/02/06/compiling-r-gnu-readline/&#34;&gt;文章&lt;/a&gt;进行编译的，他说的很清楚，把我从一个大坑里拉了出来。编译时的&lt;code&gt;LDFLAGS&lt;/code&gt;和&lt;code&gt;CPPFLAGS&lt;/code&gt;如果不写，即使你在别的什么地方指定了readline/ssl/curl，R也是不会认的。（&lt;code&gt;LD_LIBRARY_PATH&lt;/code&gt;也要写好）
+经过无数天的素质三连(&lt;code&gt;../configure blahblah&lt;/code&gt;然后&lt;code&gt;make -j50&lt;/code&gt;然后&lt;code&gt;make install&lt;/code&gt;)我往&lt;code&gt;.zshrc&lt;/code&gt;里加入了两个alias。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;alias pszll&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mkdir build_dir &amp;amp;&amp;amp; cd build_dir&amp;#34;&lt;/span&gt;
+alias szll&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;make -j50 &amp;amp;&amp;amp; make install&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;configure&lt;/code&gt;就没写进去了，毕竟那么多参数要改。&lt;br&gt;
+好的，由于集群的io问题，我等待了半天(实指)后终于装好了。&lt;br&gt;
+加入环境变量，设好&lt;code&gt;R_LIBS_USER&lt;/code&gt;作为自己以后装包的目录(强烈推荐，这样你在自己装的包出问题之后可以毫无负担地删掉这个目录)
+看上去没什么问题，我表示可以启动R。&lt;/p&gt;
+&lt;h2 id=&#34;坑爹的irkernel&#34;&gt;坑爹的IRkernel&lt;/h2&gt;
+&lt;p&gt;由于我最终还是要在Jupyter lab里面使用R的，于是手动安装一个IRkernel。一切正常，直到我发现在jupyter里面执行任何代码都会导致kernel died（&lt;br&gt;
+我发现它报的错误是跟x有关，遂查到&lt;a href=&#34;https://github.com/IRkernel/IRkernel/issues/388&#34;&gt;这个issue&lt;/a&gt;，可是我明明是加了&lt;code&gt;--with-x=no&lt;/code&gt;的，实在不知道为什么（&lt;br&gt;
+由于时间有限加上我的工作并不是运维。。。所以我最终屈服了，使用了anaconda来安装R（好水啊这个文章图都没有）。
+当然我也有隔离我的R的！新开了一个环境里面只有R和R包的依赖，然后在要用到python的时候使用别的环境（你能想象我司辣鸡IO让我浪费了多少生命吗）。&lt;/p&gt;- https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/ - </description>
+        </item>
+    
+    
+    
+        <item>
+        <title>一个简陋的pubmed摘要爬虫</title>
+        <link>https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/</link>
+        <pubDate>Sun, 02 Dec 2018 16:29:35 +0000</pubDate>
+        
+        <guid>https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/</guid>
+        <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/ -&lt;h1 id=&#34;一个简陋的pubmed摘要爬虫&#34;&gt;一个简陋的pubmed摘要爬虫&lt;/h1&gt;
+&lt;p&gt;前段时间被组里布置了一个很烦人的任务，要看很多文献的摘要提取这些研究的结果，我觉得用手点实在是太麻烦了，于是想用爬虫来完成copy摘要的任务。虽然我还不会写爬虫（甚至没怎么写过python），但是都可以学的嘛。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;直接上代码，这个代码非常不pythonic，但是你要考虑到我能用就行的标准不是？：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/home/tpob/miniconda3/bin/python&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; requests&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; lxml&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; urllib&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; re
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; bs4 &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; BeautifulSoup
+&lt;span style=&#34;color:#75715e&#34;&gt;# 定义UA， 虽然pubmed好像根本没有反爬虫措施&lt;/span&gt;
+headers &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
+    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;User-Agent&amp;#34;&lt;/span&gt;:&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36&amp;#34;&lt;/span&gt;
+}
+&lt;span style=&#34;color:#75715e&#34;&gt;# 读进我要查的文献列表，每行一个&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/home/tpob/paper_list.txt&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;r&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; paper_list:
+    paper_names&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;paper_list&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;splitlines()
+&lt;span style=&#34;color:#75715e&#34;&gt;# 等一会BeautifulSoup解析出来的元素都是标签，用这个函数方便后面map成plain text&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;tag_to_string&lt;/span&gt;(tag):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; tag&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text
+&lt;span style=&#34;color:#75715e&#34;&gt;# 开文件准备往进写&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/home/tpob/abstracts.md&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; abstracts_file:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;# Abstracts of all papers:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; paper_name &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; paper_names:
+        paper_name_url &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
+            &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;term&amp;#34;&lt;/span&gt;:paper_name&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;encode(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;utf-8&amp;#34;&lt;/span&gt;)
+        }
+        pubmed_request &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://www.ncbi.nlm.nih.gov/pubmed/&amp;#34;&lt;/span&gt;, headers &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; headers, params &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; urllib&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;parse&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;urlencode(paper_name_url))
+        pubmed &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; BeautifulSoup(pubmed_request&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;lxml&amp;#39;&lt;/span&gt;)
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;try&lt;/span&gt;:
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 下面这句的ref=re.compile......是为了防止跳进comments&lt;/span&gt;
+            paper_id &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pubmed&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;a&amp;#34;&lt;/span&gt;, href &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;compile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;^/pubmed/\d+&amp;#34;&lt;/span&gt;), ref&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;compile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;citationsensor$&amp;#34;&lt;/span&gt;))[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;href&amp;#39;&lt;/span&gt;]
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 这个异常写成这个鬼样子因为我发现如果你查的文献在pubmed上只有一个匹配就会直接跳过去，而不是像下面会得到搜索结果页面，然后再点第一个。所以在这里我就直接跳过下面从搜索结果里找的步骤了。（居然没有报错，真是神奇(其实错了，但是现在是修正过的版本)）&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;except&lt;/span&gt;:
+            paper_content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; pubmed_request
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+            paper_content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://www.ncbi.nlm.nih.gov&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;paper_id)
+        paper_content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; BeautifulSoup(paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;lxml&amp;#39;&lt;/span&gt;)
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 同样的你可以f12&lt;/span&gt;
+        journal_name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;, href &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#&amp;#39;&lt;/span&gt;, class_&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;)[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;title&amp;#39;&lt;/span&gt;]
+        paper_abstract &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;div&amp;#39;&lt;/span&gt;, class_ &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;abstr&amp;#39;&lt;/span&gt;)
+        pmid &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find_all(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;dd&amp;#39;&lt;/span&gt;, text&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;compile(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;^\d{8}&amp;#34;&lt;/span&gt;))[&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; paper_abstract&lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt;None:
+            abstract_sub_title&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;paper_abstract&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find_all(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;h4&amp;#39;&lt;/span&gt;)
+            abstract_text&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;paper_abstract&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find_all(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;p&amp;#39;&lt;/span&gt;)
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(paper_name)
+            abstract_for_human &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+            abstract_for_human &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;## &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;paper_content&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;find(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;h1&amp;#39;&lt;/span&gt;, class_&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+            &lt;span style=&#34;color:#75715e&#34;&gt;# 我知道这行代码非常不pythonic不要骂我我才刚开始学。。。然后这个的目的是，NCBI上的abstract很多是有小标题的，这样我就把每个小标题分开，得到human readable的abstract&lt;/span&gt;
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; len(abstract_sub_title)&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(len(abstract_sub_title)&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;):
+                    abstract_for_human&lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;### &amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;abstract_sub_title[i]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+                    abstract_for_human&lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt;abstract_text[i]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;text&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+            &lt;span style=&#34;color:#75715e&#34;&gt;# 当然，也有很多没有小标题，底下那个map就是上面说的把标签转文字的作用啦不然没法join，list又不能直接.text&lt;/span&gt;
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+                abstract_for_human&lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(list(map(tag_to_string ,abstract_text)))
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(abstract_for_human&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[PMID:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(pmid)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;](https://www.ncbi.nlm.nih.gov/pubmed/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(pmid)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pmid&amp;#39;&lt;/span&gt;:pmid}, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[Journal: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(journal)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;journal&amp;#39;&lt;/span&gt;:journal_name}, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 你说气不气，有的连摘要都没有（后来发现是我错了）&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;## &lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%s&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt; has no abstract!&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; paper_name, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[PMID:&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(pmid)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;](https://www.ncbi.nlm.nih.gov/pubmed/&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(pmid)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;pmid&amp;#39;&lt;/span&gt;:pmid}, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;[Journal: &lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;%(journal)s&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;]&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;journal&amp;#39;&lt;/span&gt;:journal_name}, file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;abstracts_file)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;好啦这个简陋的爬虫就这么几行的代码，希望大家给我提一些改进意见加一些新功能比如查影响因子什么的（如果真的有人看的话）。&lt;/p&gt;
+- https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/ - </description>
         </item>
     
     

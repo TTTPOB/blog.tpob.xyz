@@ -12,6 +12,24 @@
     
     
     <item>
+      <title>一些小脚本</title>
+      <link>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
+      <pubDate>Tue, 27 Nov 2018 22:41:37 +0000</pubDate>
+      
+      <guid>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</guid>
+      <description>一些小脚本 我老是会忘掉一些好用的脚本\命令\snippet，因为并不是很常用，本地存吧又会乱，OneNote因字体问题已然放弃，就扔在这里吧。出处的话，我也不能保证是原创啦，大概只能写上Google第一条结果（
+删除[PATH]路径下所有失效软链接 删除所有软链接 find -type l -delete [PATH]删除所有失效软链接 find -L [PATH] -type l -delete&amp;ldquo;-L&amp;quot;参数表示什么我没有看懂，原作者说是追踪软连接，&amp;ndash;help说是tree。有人知道评论告知，不胜感激。
+来源：Librehat的部落格
+读取软链接下文件的真实位置 使用readlink工具(自带)
+readlink -f [file_or_dir]使用英伟达独显的linux用户桌面出现撕裂 添加
+(sleep 2s &amp;amp;&amp;amp;export __GL_YIELD=“USLEEP” &amp;amp;&amp;amp; kwin_x11 --replace)到启动脚本。 来源见此
+SGE集群(使用qsub的)查看自己限额 这个跟不同集群设置也有关系的，可能不行
+qconf -srqs quota_on_{队列名字} | grep {用户名}安装R包缺动态链接库 参看这个回答，核心就是手动指定动态链接库
+withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&amp;#34;haven&amp;#34;), assignment=&amp;#34;+=&amp;#34;)安装R包出现unable to load shared object &amp;hellip;&amp;hellip; haven.so: undefined symbol: libiconv ERROR: &amp;hellip;&amp;hellip; 错误 参看haven的issue，安装时使用withr::with_makevars(c(PKG_LIBS = &amp;ldquo;-liconv&amp;rdquo;), install.packages(&amp;ldquo;haven&amp;rdquo;), assignment = &amp;ldquo;+=&amp;rdquo;)即可。其它类似报错也可如法炮制。
+各种依赖ncurses的程序报缺so文件（libncurses.so.6, libtinfo.</description>
+    </item>
+    
+    <item>
       <title>如果你想不开想要在公司集群上编译R</title>
       <link>https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/</link>
       <pubDate>Mon, 03 Dec 2018 23:25:19 +0000</pubDate>
@@ -37,24 +55,6 @@
       <description>一个简陋的pubmed摘要爬虫 前段时间被组里布置了一个很烦人的任务，要看很多文献的摘要提取这些研究的结果，我觉得用手点实在是太麻烦了，于是想用爬虫来完成copy摘要的任务。虽然我还不会写爬虫（甚至没怎么写过python），但是都可以学的嘛。
 直接上代码，这个代码非常不pythonic，但是你要考虑到我能用就行的标准不是？：
 #!/home/tpob/miniconda3/bin/python import requests, lxml, urllib, re from bs4 import BeautifulSoup # 定义UA， 虽然pubmed好像根本没有反爬虫措施 headers = { &amp;#34;User-Agent&amp;#34;:&amp;#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36&amp;#34; } # 读进我要查的文献列表，每行一个 with open(&amp;#39;/home/tpob/paper_list.txt&amp;#39;, &amp;#39;r&amp;#39;) as paper_list: paper_names=paper_list.read().splitlines() # 等一会BeautifulSoup解析出来的元素都是标签，用这个函数方便后面map成plain text def tag_to_string(tag): return tag.text # 开文件准备往进写 with open(&amp;#39;/home/tpob/abstracts.md&amp;#39;, &amp;#39;a&amp;#39;) as abstracts_file: print(&amp;#34;# Abstracts of all papers:\n&amp;#34;, file=abstracts_file) for paper_name in paper_names: paper_name_url = { &amp;#34;term&amp;#34;:paper_name.encode(&amp;#34;utf-8&amp;#34;) } pubmed_request = requests.</description>
-    </item>
-    
-    <item>
-      <title>一些小脚本</title>
-      <link>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
-      <pubDate>Tue, 27 Nov 2018 22:41:37 +0000</pubDate>
-      
-      <guid>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</guid>
-      <description>一些小脚本 我老是会忘掉一些好用的脚本\命令\snippet，因为并不是很常用，本地存吧又会乱，OneNote因字体问题已然放弃，就扔在这里吧。出处的话，我也不能保证是原创啦，大概只能写上Google第一条结果（
-删除[PATH]路径下所有失效软链接 删除所有软链接 find -type l -delete [PATH]删除所有失效软链接 find -L [PATH] -type l -delete&amp;ldquo;-L&amp;quot;参数表示什么我没有看懂，原作者说是追踪软连接，&amp;ndash;help说是tree。有人知道评论告知，不胜感激。
-来源：Librehat的部落格
-读取软链接下文件的真实位置 使用readlink工具(自带)
-readlink -f [file_or_dir]使用英伟达独显的linux用户桌面出现撕裂 添加
-(sleep 2s &amp;amp;&amp;amp;export __GL_YIELD=“USLEEP” &amp;amp;&amp;amp; kwin_x11 --replace)到启动脚本。 来源见此
-SGE集群(使用qsub的)查看自己限额 这个跟不同集群设置也有关系的，可能不行
-qconf -srqs quota_on_{队列名字} | grep {用户名}安装R包缺动态链接库 参看这个回答，核心就是手动指定动态链接库
-withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&amp;#34;haven&amp;#34;), assignment=&amp;#34;+=&amp;#34;)安装R包出现unable to load shared object &amp;hellip;&amp;hellip; haven.so: undefined symbol: libiconv ERROR: &amp;hellip;&amp;hellip; 错误 参看haven的issue，安装时使用withr::with_makevars(c(PKG_LIBS = &amp;ldquo;-liconv&amp;rdquo;), install.packages(&amp;ldquo;haven&amp;rdquo;), assignment = &amp;ldquo;+=&amp;rdquo;)即可。其它类似报错也可如法炮制。
-各种依赖ncurses的程序报缺so文件（libncurses.so.6, libtinfo.</description>
     </item>
     
     <item>
