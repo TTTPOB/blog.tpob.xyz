@@ -6,7 +6,7 @@
     <description>Recent content in Posts on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 03 Dec 2018 23:25:19 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2020 21:35:51 +0800</lastBuildDate>
     
 	<atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     
@@ -18,15 +18,24 @@
       
       <guid>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</guid>
       <description>一些小脚本 我老是会忘掉一些好用的脚本\命令\snippet，因为并不是很常用，本地存吧又会乱，OneNote因字体问题已然放弃，就扔在这里吧。出处的话，我也不能保证是原创啦，大概只能写上Google第一条结果（
-删除[PATH]路径下所有失效软链接 删除所有软链接 find -type l -delete [PATH]删除所有失效软链接 find -L [PATH] -type l -delete&amp;ldquo;-L&amp;quot;参数表示什么我没有看懂，原作者说是追踪软连接，&amp;ndash;help说是tree。有人知道评论告知，不胜感激。
+删除[PATH]路径下所有失效软链接 删除所有软链接 find -type l -delete [PATH] 删除所有失效软链接 find -L [PATH] -type l -delete &amp;ldquo;-L&amp;quot;参数表示什么我没有看懂，原作者说是追踪软连接，&amp;ndash;help说是tree。有人知道评论告知，不胜感激。
 来源：Librehat的部落格
 读取软链接下文件的真实位置 使用readlink工具(自带)
-readlink -f [file_or_dir]使用英伟达独显的linux用户桌面出现撕裂 添加
-(sleep 2s &amp;amp;&amp;amp;export __GL_YIELD=“USLEEP” &amp;amp;&amp;amp; kwin_x11 --replace)到启动脚本。 来源见此
+readlink -f [file_or_dir] 使用英伟达独显的linux用户桌面出现撕裂 添加
+(sleep 2s &amp;amp;&amp;amp; export __GL_YIELD=“USLEEP” &amp;amp;&amp;amp; kwin_x11 --replace ) 到启动脚本。 来源见此
 SGE集群(使用qsub的)查看自己限额 这个跟不同集群设置也有关系的，可能不行
-qconf -srqs quota_on_{队列名字} | grep {用户名}安装R包缺动态链接库 参看这个回答，核心就是手动指定动态链接库
-withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&amp;#34;haven&amp;#34;), assignment=&amp;#34;+=&amp;#34;)安装R包出现unable to load shared object &amp;hellip;&amp;hellip; haven.so: undefined symbol: libiconv ERROR: &amp;hellip;&amp;hellip; 错误 参看haven的issue，安装时使用withr::with_makevars(c(PKG_LIBS = &amp;ldquo;-liconv&amp;rdquo;), install.packages(&amp;ldquo;haven&amp;rdquo;), assignment = &amp;ldquo;+=&amp;rdquo;)即可。其它类似报错也可如法炮制。
+qconf -srqs quota_on_{队列名字} | grep {用户名} 安装R包缺动态链接库 参看这个回答，核心就是手动指定动态链接库
+withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&amp;#34;haven&amp;#34;), assignment=&amp;#34;+=&amp;#34;) 安装R包出现unable to load shared object &amp;hellip;&amp;hellip; haven.so: undefined symbol: libiconv ERROR: &amp;hellip;&amp;hellip; 错误 参看haven的issue，安装时使用withr::with_makevars(c(PKG_LIBS = &amp;ldquo;-liconv&amp;rdquo;), install.packages(&amp;ldquo;haven&amp;rdquo;), assignment = &amp;ldquo;+=&amp;rdquo;)即可。其它类似报错也可如法炮制。
 各种依赖ncurses的程序报缺so文件（libncurses.so.6, libtinfo.</description>
+    </item>
+    
+    <item>
+      <title>OneDriveFileSort</title>
+      <link>https://blog.tpob.xyz/2020/05/21/onedrivefilesort/</link>
+      <pubDate>Thu, 21 May 2020 21:35:51 +0800</pubDate>
+      
+      <guid>https://blog.tpob.xyz/2020/05/21/onedrivefilesort/</guid>
+      <description>我一直使用移动设备的OneDrive app来对我的照片、录像、屏幕截图等进行备份，但是它会将所有的文件都堆积到同一个文件夹中。时间一长，文件夹中将堆积数以千记的文件，不好查找不说，还会卡死资源管理器。 为了解决这一问题，我找了一些现成的工具如Dropit等，发现都不能满足我的要求；于是我花几分钟写了一个PowerShell脚本放在gist上。它的工作流程是先根据文件名判断是截图、录像还是照片，然后根据文件修改时间将其归类到不同的文件夹中。代码十分简单，加之PowerShell脚本十分易读，可以很方便地修改来适合自己的文件名。 效果图 使用方法非常简单，只需要将脚本放在图片目录下右键执行即可。当然，你也可以把脚本加入环境变量然后在终端中执行。 需要注意的是，为了安全，Windows默认是不允许执行ps1脚本文件的，为了解除这一限制，需要以管理员权限打开powershell会话，执行 Set-ExecutionPolicy RemoteSigned，意为允许运行本地任意脚本和来自网络的已签名脚本。</description>
     </item>
     
     <item>

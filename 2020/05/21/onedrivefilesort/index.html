@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>工具</title>
+<title>OneDriveFileSort</title>
 
 <meta charset="utf-8">
 <meta name="X-UA-Compatible" content="IE=edge">
@@ -51,15 +51,29 @@ if (!doNotTrack) {
 <script src="https://blog.tpob.xyz//js/table.js"></script>
 
 
-<style>
-  .toc{
-    display: none !important;
-  }
-</style>
+<script src="https://blog.tpob.xyz//js/toc.js"></script>
 
 
 <script>
     loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '7d6430b962cae7ed3df0',
+  clientSecret: 'f7e3d275d9c9861096206aa7711eb60270d6604a',
+  repo: 'blog.tpob.xyz',
+  owner: 'TTTPOB',
+  admin: ['TTTPOB'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
 </script>
 
 
@@ -100,6 +114,11 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
     
 </div><div ref="extraContainer" class="extra-container">
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -115,8 +134,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             </i>
         </a>
         
-        
-        
     </div>
 </div><div class="single-column-drawer-container" ref="drawer"
      v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
@@ -124,6 +141,11 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
         <div class="drawer-menu">
             
             
+            
+            <div class="toc">
+
+
+</div>
             
         </div>
     </div>
@@ -163,36 +185,76 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             <div id="content">
 <div ref="streamContainer" class="stream-container">
     <div class="post-list-container post-list-container-shadow">
-        <div class="post-item-wrapper post-item-wrapper-no-hover">
-            <div class="post-item post-item-no-gaps">
-                <div class="post-item-info-wrapper">
-                    <div class="post-item-title  post-item-title-small">
-                        <a href="https://blog.tpob.xyz/">TPOB&#39;s Dustbin</a> / 工具
-                    </div>
-                </div>
-            </div>
-        </div><a href="/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/" class="a-block">
-            <div class="post-item-wrapper">
-                <div class="post-item post-item-no-gaps">
-                    <div class="post-item-info-wrapper">
-                        <div class="post-item-title">
-                            一些小脚本
-                        </div>
-                        <div class="post-item-meta">
-                            Nov 27, 2018
+        <div class="post">
+            
+            
+            
 
-                            
-                        </div>
+            <div class="post-head-wrapper-text-only"
+                 style="background-image: url('/')">
+                <div class="post-title">
+                    OneDriveFileSort
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2020-05-21 21:35
+                        </time>
+                        
+
+                        
+
+                        
                     </div>
                 </div>
             </div>
-        </a></div>
+            
+            <div class="post-body-wrapper">
+                <div class="post-body">
+                    <p>我一直使用移动设备的OneDrive app来对我的照片、录像、屏幕截图等进行备份，但是它会将所有的文件都堆积到同一个文件夹中。时间一长，文件夹中将堆积数以千记的文件，不好查找不说，还会卡死资源管理器。
+为了解决这一问题，我找了一些现成的工具如Dropit等，发现都不能满足我的要求；于是我花几分钟写了一个PowerShell脚本放在gist上。它的工作流程是先根据文件名判断是截图、录像还是照片，然后根据文件修改时间将其归类到不同的文件夹中。代码十分简单，加之PowerShell脚本十分易读，可以很方便地修改来适合自己的文件名。
+效果图 <img src="https://img.tpob.xyz/20200521213944.png" alt="效果图"></p>
+<p>使用方法非常简单，只需要将脚本放在图片目录下右键执行即可。当然，你也可以把脚本加入环境变量然后在终端中执行。
+需要注意的是，为了安全，Windows默认是不允许执行ps1脚本文件的，为了解除这一限制，需要以管理员权限打开powershell会话，执行 <code>Set-ExecutionPolicy RemoteSigned</code>，意为允许运行本地任意脚本和来自网络的已签名脚本。</p>
+
+                    
+                    <HR width="100%" id="EOF">
+                    <p style="color:#777;">Last modified on 2020-05-21</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/">
+                    Next<br>一些小脚本
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/">
+                    Previous<br>如果你想不开想要在公司集群上编译R
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
 </div>
 
-            </div>
-
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>

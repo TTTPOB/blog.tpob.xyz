@@ -5,7 +5,7 @@
     <description>Recent content on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 03 Dec 2018 23:25:19 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2020 21:35:51 +0800</lastBuildDate>
     
         <atom:link href="https://blog.tpob.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -76,16 +76,16 @@ sudo ntpdate cn.pool.ntp.org
 来源：&lt;a href=&#34;https://answers.microsoft.com/zh-hans/msoffice/forum/all/onedrive-for-business/df7a5174-c253-401d-b909-6419ed6c1bc9&#34;&gt;Windows支持社区&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;windows-将用notepad2打开添加到windows右键菜单&#34;&gt;Windows: 将“用Notepad2打开”添加到Windows右键菜单&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-registry&#34; data-lang=&#34;registry&#34;&gt;Windows Registry Editor Version 5.00
-&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;[HKEY_CLASSES_ROOT\*\shell\Edit&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;Notepad2]&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;[&lt;/span&gt;HKEY_CLASSES_ROOT&lt;span style=&#34;color:#66d9ef&#34;&gt;\*\shell\Edit with Notepad2]&lt;/span&gt;
 
-&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;[HKEY_CLASSES_ROOT\*\shell\Edit&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;Notepad2\command]&lt;/span&gt;
-&lt;span style=&#34;color:#a6e22e&#34;&gt;@&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;\&amp;#34;C:\\Program Files\\Notepad2\\Notepad2.exe\&amp;#34; \&amp;#34;%1\&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;[&lt;/span&gt;HKEY_CLASSES_ROOT&lt;span style=&#34;color:#66d9ef&#34;&gt;\*\shell\Edit with Notepad2\command]&lt;/span&gt;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;@&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;\&amp;#34;C:\\Program Files\\Notepad2\\Notepad2.exe\&amp;#34; \&amp;#34;%1\&amp;#34;&amp;#34;&lt;/span&gt;
 Windows Registry Editor Version 5.00
 
-&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;[HKEY_CLASSES_ROOT\*\shell\Edit&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;Notepad2]&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;[&lt;/span&gt;HKEY_CLASSES_ROOT&lt;span style=&#34;color:#66d9ef&#34;&gt;\*\shell\Edit with Notepad2]&lt;/span&gt;
 
-&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;[HKEY_CLASSES_ROOT\*\shell\Edit&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;with&lt;/span&gt; &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;Notepad2\command]&lt;/span&gt;
-&lt;span style=&#34;color:#a6e22e&#34;&gt;@&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;\&amp;#34;C:\\Program Files\\Notepad2\\Notepad2.exe\&amp;#34; \&amp;#34;%1\&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;[&lt;/span&gt;HKEY_CLASSES_ROOT&lt;span style=&#34;color:#66d9ef&#34;&gt;\*\shell\Edit with Notepad2\command]&lt;/span&gt;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;@&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;\&amp;#34;C:\\Program Files\\Notepad2\\Notepad2.exe\&amp;#34; \&amp;#34;%1\&amp;#34;&amp;#34;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;windows-windows中许多程序默认字体为宋体&#34;&gt;Windows: Windows中许多程序默认字体为宋体&lt;/h2&gt;
 &lt;p&gt;参看&lt;a href=&#34;http://www.qtcn.org/bbs/read-htm-tid-21367.html&#34;&gt;这个链接&lt;/a&gt;，修改注册表解决。将&lt;code&gt;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\GRE_Initialize&lt;/code&gt;中的&lt;code&gt;GUIFont.Facename&lt;/code&gt;改成自己喜欢的即可，我使用的是&lt;code&gt;Sarasa UI SC&lt;/code&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;windows-windows无法正常休眠&#34;&gt;Windows: Windows无法正常休眠&lt;/h2&gt;
@@ -130,6 +130,22 @@ fi
 &lt;h2 id=&#34;linux某一个分区中的文件即使有执行权限也不能被执行&#34;&gt;Linux某一个分区中的文件即使有执行权限也不能被执行&lt;/h2&gt;
 &lt;p&gt;检查&lt;code&gt;/etc/fatab&lt;/code&gt;文件，查看这个分区的挂载属性中是否含有&lt;code&gt;noexec&lt;/code&gt;。如果有，改为&lt;code&gt;exec&lt;/code&gt;即可。&lt;/p&gt;
 - https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/ - </description>
+        </item>
+    
+    
+    
+        <item>
+        <title>OneDriveFileSort</title>
+        <link>https://blog.tpob.xyz/2020/05/21/onedrivefilesort/</link>
+        <pubDate>Thu, 21 May 2020 21:35:51 +0800</pubDate>
+        
+        <guid>https://blog.tpob.xyz/2020/05/21/onedrivefilesort/</guid>
+        <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2020/05/21/onedrivefilesort/ -&lt;p&gt;我一直使用移动设备的OneDrive app来对我的照片、录像、屏幕截图等进行备份，但是它会将所有的文件都堆积到同一个文件夹中。时间一长，文件夹中将堆积数以千记的文件，不好查找不说，还会卡死资源管理器。
+为了解决这一问题，我找了一些现成的工具如Dropit等，发现都不能满足我的要求；于是我花几分钟写了一个PowerShell脚本放在gist上。它的工作流程是先根据文件名判断是截图、录像还是照片，然后根据文件修改时间将其归类到不同的文件夹中。代码十分简单，加之PowerShell脚本十分易读，可以很方便地修改来适合自己的文件名。
+效果图 &lt;img src=&#34;https://img.tpob.xyz/20200521213944.png&#34; alt=&#34;效果图&#34;&gt;&lt;/p&gt;
+&lt;p&gt;使用方法非常简单，只需要将脚本放在图片目录下右键执行即可。当然，你也可以把脚本加入环境变量然后在终端中执行。
+需要注意的是，为了安全，Windows默认是不允许执行ps1脚本文件的，为了解除这一限制，需要以管理员权限打开powershell会话，执行 &lt;code&gt;Set-ExecutionPolicy RemoteSigned&lt;/code&gt;，意为允许运行本地任意脚本和来自网络的已签名脚本。&lt;/p&gt;
+- https://blog.tpob.xyz/2020/05/21/onedrivefilesort/ - </description>
         </item>
     
     
