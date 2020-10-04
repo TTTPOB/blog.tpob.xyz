@@ -129,6 +129,8 @@ fi
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/u011729865/article/details/71773840&#34;&gt;来源&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;linux某一个分区中的文件即使有执行权限也不能被执行&#34;&gt;Linux某一个分区中的文件即使有执行权限也不能被执行&lt;/h2&gt;
 &lt;p&gt;检查&lt;code&gt;/etc/fatab&lt;/code&gt;文件，查看这个分区的挂载属性中是否含有&lt;code&gt;noexec&lt;/code&gt;。如果有，改为&lt;code&gt;exec&lt;/code&gt;即可。&lt;/p&gt;
+&lt;h2 id=&#34;丢人git-clone不带submodule&#34;&gt;丢人：git clone不带submodule&lt;/h2&gt;
+&lt;p&gt;加上 &lt;code&gt;--recursive&lt;/code&gt;&lt;/p&gt;
 - https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/ - </description>
         </item>
     
