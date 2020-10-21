@@ -143,7 +143,7 @@ fi
         
         <guid>https://blog.tpob.xyz/2020/05/21/onedrive-app-%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E7%9A%84%E6%96%87%E4%BB%B6%E6%95%B4%E7%90%86%E8%84%9A%E6%9C%AC/</guid>
         <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2020/05/21/onedrive-app-%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E7%9A%84%E6%96%87%E4%BB%B6%E6%95%B4%E7%90%86%E8%84%9A%E6%9C%AC/ -&lt;p&gt;我一直使用移动设备的OneDrive app来对我的照片、录像、屏幕截图等进行备份，但是它会将所有的文件都堆积到同一个文件夹中。时间一长，文件夹中将堆积数以千记的文件，不好查找不说，还会卡死资源管理器。
-为了解决这一问题，我找了一些现成的工具如Dropit等，发现都不能满足我的要求；于是我花几分钟写了一个PowerShell脚本放在gist上。它的工作流程是先根据文件名判断是截图、录像还是照片，然后根据文件修改时间将其归类到不同的文件夹中。代码十分简单，加之PowerShell脚本十分易读，可以很方便地修改来适合自己的文件名。
+为了解决这一问题，我找了一些现成的工具如Dropit等，发现都不能满足我的要求；于是我花几分钟写了一个PowerShell脚本放在&lt;a href=&#34;https://gist.github.com/TTTPOB/20859243237c1ba751aee24baf27b689&#34;&gt;gist&lt;/a&gt;上。它的工作流程是先根据文件名判断是截图、录像还是照片，然后根据文件修改时间将其归类到不同的文件夹中。代码十分简单，加之PowerShell脚本十分易读，可以很方便地修改来适合自己的文件名。
 效果图 &lt;img src=&#34;https://img.tpob.xyz/20200521213944.png&#34; alt=&#34;效果图&#34;&gt;&lt;/p&gt;
 &lt;p&gt;使用方法非常简单，只需要将脚本放在图片目录下右键执行即可。当然，你也可以把脚本加入环境变量然后在终端中执行。
 需要注意的是，为了安全，Windows默认是不允许执行ps1脚本文件的，为了解除这一限制，需要以管理员权限打开powershell会话，执行 &lt;code&gt;Set-ExecutionPolicy RemoteSigned&lt;/code&gt;，意为允许运行本地任意脚本和来自网络的已签名脚本。&lt;/p&gt;
