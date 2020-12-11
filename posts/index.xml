@@ -6,7 +6,7 @@
     <description>Recent content in Posts on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 21 May 2020 21:35:51 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Dec 2020 13:41:33 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一些小脚本</title>
       <link>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
@@ -23,6 +23,41 @@ SGE集群(使用qsub的)查看自己限额 这个跟不同集群设置也有关�
 qconf -srqs quota_on_{队列名字} | grep {用户名} 安装R包缺动态链接库 参看这个回答，核心就是手动指定动态链接库
 withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&amp;#34;haven&amp;#34;), assignment=&amp;#34;+=&amp;#34;) 安装R包出现unable to load shared object &amp;hellip;&amp;hellip; haven.so: undefined symbol: libiconv ERROR: &amp;hellip;&amp;hellip; 错误 参看haven的issue，安装时使用withr::with_makevars(c(PKG_LIBS = &amp;ldquo;-liconv&amp;rdquo;), install.packages(&amp;ldquo;haven&amp;rdquo;), assignment = &amp;ldquo;+=&amp;quot;)即可。其它类似报错也可如法炮制。
 各种依赖ncurses的程序报缺so文件（libncurses.so.6, libtinfo.</description>
+    </item>
+    
+    <item>
+      <title>在WSL2上修好到服务器的X11转发</title>
+      <link>https://blog.tpob.xyz/2020/12/11/%E5%9C%A8wsl2%E4%B8%8A%E4%BF%AE%E5%A5%BD%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84x11%E8%BD%AC%E5%8F%91/</link>
+      <pubDate>Fri, 11 Dec 2020 13:41:33 +0800</pubDate>
+      
+      <guid>https://blog.tpob.xyz/2020/12/11/%E5%9C%A8wsl2%E4%B8%8A%E4%BF%AE%E5%A5%BD%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84x11%E8%BD%AC%E5%8F%91/</guid>
+      <description>大约一年以前我从WSL1“升级”到WSL2，首先遇到的问题是以前常用的在Windows上跑一个x服务器然后用x11监听到wsl里来用图形软件的做法似乎不能用了：
+Error: Can&#39;t open display: localhost:10
+如果有人需要解释为什么是localhost:10而不是:10那你可以先去查一查(
+解决办法比较简单，是把localhost:10换成$WINDOWS_IP:10当然这个10可以是你想要的任何端口号。（我保持这个状态到了今天）
+心情好的话我改天更新一下把涉及到的所有奇怪操作都写一下免得你们还要去别处查
+但当你这样弄完之后你会发现你SSH到实验室服务器的时候会Warning: untrusted X11 forwarding setup failed: xauth key data not generated，并且确实无法使用服务器的X11软件，即使ssh -Y也不行。
+那我只能ssh -vvv看看出了什么事，发现卡在这里：
+debug2: client_x11_get_proto: xauth command: /usr/sbin/xauth -f /tmp/ssh-V0tly0ULHMm2/xauthfile generate 172.26.112.1:10 MIT-MAGIC-COOKIE-1 untrusted timeout 1260 2&amp;gt;/dev/null
+其中172.26.112.1:10是我刚刚设置的$WINDOWS_IP:10，所以似乎&amp;hellip;xauth没有办法在target不在本机的时候进行认证？看起来好像是这样，但我们又不能设置到WSL2的localhost这样windows上的x服务器认不到端口&amp;hellip;
+但是
+我们
+可以用
+端口转发
+去nmdX11转发
+（
+我是这么干的
+在服务器上的.whatevershrc:
+export DISPLAY=localhost:10
+在本地用带端口转发的ssh
+ssh $targetserver -R 6010:localhost:6010
+另开一个本地终端
+socat tcp-l:6010,fork,reuseaddr tcp:$WINDOWSIP:6010 &amp;amp;
+然后记得在windows打开你的xserver并设置好监听到10，当然如果你开在别的端口就监听别的，上面也都改成你自己设置的。
+好了我们在服务器试试xeyes。
+今天没带鼠标懒得插图总之我成功了嗯。
+啊你问我为什么一年以前的事情现在发，，，其实是我忍了一年今天才知道为啥出了问题（
+哦中英文互联网世界好像都没有人有这个问题，估计他们没有我这么扭曲的需求吧。</description>
     </item>
     
     <item>

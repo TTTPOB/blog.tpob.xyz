@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>OneDrive app 自动备份的文件整理脚本</title>
+<title>在WSL2上修好到服务器的X11转发</title>
 
 
 
@@ -223,12 +223,12 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
             >
                 <div class="post-title">
-                    OneDrive app 自动备份的文件整理脚本
+                    在WSL2上修好到服务器的X11转发
                     
                     <div class="post-meta">
                         
                         <time itemprop="datePublished">
-                            2020-05-21 21:35
+                            2020-12-11 13:41
                         </time>
                         
 
@@ -244,15 +244,37 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 
                 <div class="post-body" v-pre>
                 
-                    <p>我一直使用移动设备的OneDrive app来对我的照片、录像、屏幕截图等进行备份，但是它会将所有的文件都堆积到同一个文件夹中。时间一长，文件夹中将堆积数以千记的文件，不好查找不说，还会卡死资源管理器。
-为了解决这一问题，我找了一些现成的工具如Dropit等，发现都不能满足我的要求；于是我花几分钟写了一个PowerShell脚本放在<a href="https://gist.github.com/TTTPOB/20859243237c1ba751aee24baf27b689">gist</a>上。它的工作流程是先根据文件名判断是截图、录像还是照片，然后根据文件修改时间将其归类到不同的文件夹中。代码十分简单，加之PowerShell脚本十分易读，可以很方便地修改来适合自己的文件名。
-效果图 <img src="https://img.tpob.xyz/20200521213944.png" alt="效果图"></p>
-<p>使用方法非常简单，只需要将脚本放在图片目录下右键执行即可。当然，你也可以把脚本加入环境变量然后在终端中执行。
-需要注意的是，为了安全，Windows默认是不允许执行ps1脚本文件的，为了解除这一限制，需要以管理员权限打开powershell会话，执行 <code>Set-ExecutionPolicy RemoteSigned</code>，意为允许运行本地任意脚本和来自网络的已签名脚本。</p>
+                    <p>大约一年以前我从<code>WSL1</code>“升级”到<code>WSL2</code>，首先遇到的问题是以前常用的在Windows上跑一个x服务器然后用x11监听到wsl里来用图形软件的做法似乎不能用了：</p>
+<p><code>Error: Can't open display: localhost:10</code></p>
+<p>如果有人需要解释为什么是<code>localhost:10</code>而不是<code>:10</code>那你可以先去查一查(</p>
+<p>解决办法比较简单，是把<code>localhost:10</code>换成<code>$WINDOWS_IP:10</code>当然这个10可以是你想要的任何端口号。（我保持这个状态到了今天）</p>
+<p><del>心情好的话我改天更新一下把涉及到的所有奇怪操作都写一下免得你们还要去别处查</del></p>
+<p>但当你这样弄完之后你会发现你SSH到实验室服务器的时候会<code>Warning: untrusted X11 forwarding setup failed: xauth key data not generated</code>，并且确实无法使用服务器的X11软件，即使<code>ssh -Y</code>也不行。</p>
+<p>那我只能<code>ssh -vvv</code>看看出了什么事，发现卡在这里：</p>
+<p><code>debug2: client_x11_get_proto: xauth command: /usr/sbin/xauth -f /tmp/ssh-V0tly0ULHMm2/xauthfile generate 172.26.112.1:10 MIT-MAGIC-COOKIE-1 untrusted timeout 1260 2&gt;/dev/null</code></p>
+<p>其中<code>172.26.112.1:10</code>是我刚刚设置的<code>$WINDOWS_IP:10</code>，所以似乎&hellip;<code>xauth</code>没有办法在target不在本机的时候进行认证？看起来好像是这样，但我们又不能设置到<code>WSL2</code>的<code>localhost</code>这样windows上的x服务器认不到端口&hellip;</p>
+<p>但是</p>
+<p>我们</p>
+<p>可以用</p>
+<p>端口转发</p>
+<p>去nmdX11转发</p>
+<p>（</p>
+<p>我是这么干的</p>
+<p>在服务器上的<code>.whatevershrc</code>:</p>
+<p><code>export DISPLAY=localhost:10</code></p>
+<p>在本地用带端口转发的ssh</p>
+<p><code>ssh $targetserver -R 6010:localhost:6010</code></p>
+<p>另开一个本地终端</p>
+<p><code>socat tcp-l:6010,fork,reuseaddr tcp:$WINDOWSIP:6010 &amp;</code></p>
+<p>然后记得在windows打开你的xserver并设置好监听到10，当然如果你开在别的端口就监听别的，上面也都改成你自己设置的。</p>
+<p>好了我们在服务器试试<code>xeyes</code>。</p>
+<p>今天没带鼠标懒得插图总之我成功了嗯。</p>
+<p>啊你问我为什么一年以前的事情现在发，，，其实是我忍了一年今天才知道为啥出了问题（</p>
+<p>哦中英文互联网世界好像都没有人有这个问题，估计他们没有我这么扭曲的需求吧。</p>
 
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">Last modified on 2020-05-21</p>
+		    <p style="color:#777;">Last modified on 2020-12-11</p>
                     
                 </div>
             </div>
@@ -261,14 +283,14 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="https://blog.tpob.xyz/2020/12/11/%E5%9C%A8wsl2%E4%B8%8A%E4%BF%AE%E5%A5%BD%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84x11%E8%BD%AC%E5%8F%91/">
-			Next<br>在WSL2上修好到服务器的X11转发
+                <a class="newer-posts" href="https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/">
+			Next<br>一些小脚本
                 </a>
                 
                 
                 
-                <a class="older-posts" href="https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/">
-			Previous<br>如果你想不开想要在公司集群上编译R
+                <a class="older-posts" href="https://blog.tpob.xyz/2020/05/21/onedrive-app-%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E7%9A%84%E6%96%87%E4%BB%B6%E6%95%B4%E7%90%86%E8%84%9A%E6%9C%AC/">
+			Previous<br>OneDrive app 自动备份的文件整理脚本
                 </a>
                 
             </nav>

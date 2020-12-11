@@ -5,7 +5,7 @@
     <description>Recent content on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 21 May 2020 21:35:51 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 11 Dec 2020 13:41:33 +0800</lastBuildDate>
     
         <atom:link href="https://blog.tpob.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -132,6 +132,44 @@ fi
 &lt;h2 id=&#34;丢人git-clone不带submodule&#34;&gt;丢人：git clone不带submodule&lt;/h2&gt;
 &lt;p&gt;加上 &lt;code&gt;--recursive&lt;/code&gt;&lt;/p&gt;
 - https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/ - </description>
+        </item>
+    
+    
+    
+        <item>
+        <title>在WSL2上修好到服务器的X11转发</title>
+        <link>https://blog.tpob.xyz/2020/12/11/%E5%9C%A8wsl2%E4%B8%8A%E4%BF%AE%E5%A5%BD%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84x11%E8%BD%AC%E5%8F%91/</link>
+        <pubDate>Fri, 11 Dec 2020 13:41:33 +0800</pubDate>
+        
+        <guid>https://blog.tpob.xyz/2020/12/11/%E5%9C%A8wsl2%E4%B8%8A%E4%BF%AE%E5%A5%BD%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84x11%E8%BD%AC%E5%8F%91/</guid>
+        <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2020/12/11/%E5%9C%A8wsl2%E4%B8%8A%E4%BF%AE%E5%A5%BD%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84x11%E8%BD%AC%E5%8F%91/ -&lt;p&gt;大约一年以前我从&lt;code&gt;WSL1&lt;/code&gt;“升级”到&lt;code&gt;WSL2&lt;/code&gt;，首先遇到的问题是以前常用的在Windows上跑一个x服务器然后用x11监听到wsl里来用图形软件的做法似乎不能用了：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Error: Can&#39;t open display: localhost:10&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果有人需要解释为什么是&lt;code&gt;localhost:10&lt;/code&gt;而不是&lt;code&gt;:10&lt;/code&gt;那你可以先去查一查(&lt;/p&gt;
+&lt;p&gt;解决办法比较简单，是把&lt;code&gt;localhost:10&lt;/code&gt;换成&lt;code&gt;$WINDOWS_IP:10&lt;/code&gt;当然这个10可以是你想要的任何端口号。（我保持这个状态到了今天）&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;心情好的话我改天更新一下把涉及到的所有奇怪操作都写一下免得你们还要去别处查&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;但当你这样弄完之后你会发现你SSH到实验室服务器的时候会&lt;code&gt;Warning: untrusted X11 forwarding setup failed: xauth key data not generated&lt;/code&gt;，并且确实无法使用服务器的X11软件，即使&lt;code&gt;ssh -Y&lt;/code&gt;也不行。&lt;/p&gt;
+&lt;p&gt;那我只能&lt;code&gt;ssh -vvv&lt;/code&gt;看看出了什么事，发现卡在这里：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;debug2: client_x11_get_proto: xauth command: /usr/sbin/xauth -f /tmp/ssh-V0tly0ULHMm2/xauthfile generate 172.26.112.1:10 MIT-MAGIC-COOKIE-1 untrusted timeout 1260 2&amp;gt;/dev/null&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其中&lt;code&gt;172.26.112.1:10&lt;/code&gt;是我刚刚设置的&lt;code&gt;$WINDOWS_IP:10&lt;/code&gt;，所以似乎&amp;hellip;&lt;code&gt;xauth&lt;/code&gt;没有办法在target不在本机的时候进行认证？看起来好像是这样，但我们又不能设置到&lt;code&gt;WSL2&lt;/code&gt;的&lt;code&gt;localhost&lt;/code&gt;这样windows上的x服务器认不到端口&amp;hellip;&lt;/p&gt;
+&lt;p&gt;但是&lt;/p&gt;
+&lt;p&gt;我们&lt;/p&gt;
+&lt;p&gt;可以用&lt;/p&gt;
+&lt;p&gt;端口转发&lt;/p&gt;
+&lt;p&gt;去nmdX11转发&lt;/p&gt;
+&lt;p&gt;（&lt;/p&gt;
+&lt;p&gt;我是这么干的&lt;/p&gt;
+&lt;p&gt;在服务器上的&lt;code&gt;.whatevershrc&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;export DISPLAY=localhost:10&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;在本地用带端口转发的ssh&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ssh $targetserver -R 6010:localhost:6010&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;另开一个本地终端&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;socat tcp-l:6010,fork,reuseaddr tcp:$WINDOWSIP:6010 &amp;amp;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;然后记得在windows打开你的xserver并设置好监听到10，当然如果你开在别的端口就监听别的，上面也都改成你自己设置的。&lt;/p&gt;
+&lt;p&gt;好了我们在服务器试试&lt;code&gt;xeyes&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;今天没带鼠标懒得插图总之我成功了嗯。&lt;/p&gt;
+&lt;p&gt;啊你问我为什么一年以前的事情现在发，，，其实是我忍了一年今天才知道为啥出了问题（&lt;/p&gt;
+&lt;p&gt;哦中英文互联网世界好像都没有人有这个问题，估计他们没有我这么扭曲的需求吧。&lt;/p&gt;
+- https://blog.tpob.xyz/2020/12/11/%E5%9C%A8wsl2%E4%B8%8A%E4%BF%AE%E5%A5%BD%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84x11%E8%BD%AC%E5%8F%91/ - </description>
         </item>
     
     
