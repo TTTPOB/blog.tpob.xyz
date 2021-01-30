@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html><head>
+<title>如果你想不开想要在公司集群上编译R</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+
+
+
+
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-127821201-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+
+<script src="/vendor/js/jquery.min.js" ></script>
+<script src="/vendor/js/popper.min.js" ></script>
+<script src="/vendor/js/bootstrap.min.js" ></script>
+<script src="/vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+
+
+<link rel="icon" href="https://blog.tpob.xyz/favicons/magic-sketchpad%283%29-32x32.png">
+
+
+
+
+<link rel="stylesheet" href="https://blog.tpob.xyz/scss/journal.min.c116bc90d171283f099f173854157ec8f183f9073b93443b2c8ad82899ee9025.css" integrity="sha256-wRa8kNFxKD8Jnxc4VBV&#43;yPGD&#43;Qc7k0Q7LIrYKJnukCU=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://blog.tpob.xyz/scss/dark-mode.min.552aae4638a84aa57cf0b195750a49ea9131d3bb621d1ed3ebc9b14b18166536.css" integrity="sha256-VSquRjioSqV88LGVdQpJ6pEx07tiHR7T68mxSxgWZTY=" media="screen">
+
+
+<script src="https://blog.tpob.xyz//js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Lora|Montserrat|Fira+Mono|Noto+Serif+SC|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="https://blog.tpob.xyz//js/toc-collapse.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '7d6430b962cae7ed3df0',
+  clientSecret: 'f7e3d275d9c9861096206aa7711eb60270d6604a',
+  repo: 'blog.tpob.xyz',
+  owner: 'TTTPOB',
+  admin: ['TTTPOB'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://blog.tpob.xyz/">
+    
+        <div class="nav-title">
+            TPOB&#39;s Dustbin
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2020 TPOB&#39;s Dustbin
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a6%82%e6%9e%9c%e4%bd%a0%e6%83%b3%e4%b8%8d%e5%bc%80%e6%83%b3%e8%a6%81%e5%9c%a8%e5%85%ac%e5%8f%b8%e9%9b%86%e7%be%a4%e4%b8%8a%e7%bc%96%e8%af%91r" onclick="onNavClick(`#如果你想不开想要在公司集群上编译r-nav`)" id="如果你想不开想要在公司集群上编译r-nav">
+									如果你想不开想要在公司集群上编译R
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#%e9%82%a3%e5%b0%b1%e8%87%aa%e5%b7%b1%e7%bc%96%e8%af%91%e4%b8%80%e4%b8%aar" onclick="onNavClick(`#那就自己编译一个r-nav`)" id="那就自己编译一个r-nav">
+									那就自己编译一个R！
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#gcc" onclick="onNavClick(`#gcc-nav`)" id="gcc-nav">
+									GCC
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%a2%abio%e6%8a%98%e7%a3%a8" onclick="onNavClick(`#被io折磨-nav`)" id="被io折磨-nav">
+									被IO折磨
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9d%91%e7%88%b9%e7%9a%84irkernel" onclick="onNavClick(`#坑爹的irkernel-nav`)" id="坑爹的irkernel-nav">
+									坑爹的IRkernel
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a6%82%e6%9e%9c%e4%bd%a0%e6%83%b3%e4%b8%8d%e5%bc%80%e6%83%b3%e8%a6%81%e5%9c%a8%e5%85%ac%e5%8f%b8%e9%9b%86%e7%be%a4%e4%b8%8a%e7%bc%96%e8%af%91r" onclick="onNavClick(`#如果你想不开想要在公司集群上编译r-nav`)" id="如果你想不开想要在公司集群上编译r-nav">
+									如果你想不开想要在公司集群上编译R
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								<ul class="collapse" data-toggle="collapse">
+							
+						
+						
+							<li>
+								<a href="#%e9%82%a3%e5%b0%b1%e8%87%aa%e5%b7%b1%e7%bc%96%e8%af%91%e4%b8%80%e4%b8%aar" onclick="onNavClick(`#那就自己编译一个r-nav`)" id="那就自己编译一个r-nav">
+									那就自己编译一个R！
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#gcc" onclick="onNavClick(`#gcc-nav`)" id="gcc-nav">
+									GCC
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%a2%abio%e6%8a%98%e7%a3%a8" onclick="onNavClick(`#被io折磨-nav`)" id="被io折磨-nav">
+									被IO折磨
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9d%91%e7%88%b9%e7%9a%84irkernel" onclick="onNavClick(`#坑爹的irkernel-nav`)" id="坑爹的irkernel-nav">
+									坑爹的IRkernel
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://blog.tpob.xyz/">
+            TPOB&#39;s Dustbin
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://blog.tpob.xyz/">
+        <div class="single-column-header-title">TPOB&#39;s Dustbin</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    如果你想不开想要在公司集群上编译R
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2018-12-03 23:25
+                        </time>
+                        
+
+                        
+
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h1 id="如果你想不开想要在公司集群上编译r">如果你想不开想要在公司集群上编译R</h1>
+<p>我前两天做了一个让我非常痛苦的决定。<br>
+我们公司的集群，IO极差，删anaconda文件夹可能要删三天。<br>
+我们公司的集群，为了安全考虑，一般人没有root权限。
+我们公司的集群，不光没有root权限，软件和工具链也都完全不全。<br>
+所以我选择使用Anaconda当包管理器，但是一旦anaconda内部软件更新，外部依赖这些动态链接库的软件就会集体GG。比如htop、tmux(其实tmux也是我用anaconda装的)和自己装的ssh(为什么要自己装emmm，有缘再讲)。而且我平时用的最多的是R，但是R这个东西编译起来十分蛋疼所以我也用anaconda装了。<br>
+但是。<br>
+但是，anaconda里面的R版本更新特别慢，包的更新也特别慢，而且anaconda处理依赖的时候有我无法看出规律的诡异升级和降级过程，导致经常装一个新包的时候告诉你R要降级。</p>
+<h2 id="那就自己编译一个r">那就自己编译一个R！</h2>
+<p>好的，既然我想自己编译一个R，目的是摆脱anaconda对我的束缚。那我应该build everything from source对不对？好的，从这里开始就掉进坑里了。
+公司服务器上预装的gcc是4.4.7版本的，不能满足编译R的需要，我们需要更新gcc。记住，没有包管理器。</p>
+<h2 id="gcc">GCC</h2>
+<p>编译gcc的文章网上有很多，这里我们最好选择7.x（因为我用8.x被坑了，8.x有些改动是不向下兼容的，很多包会编译失败）。GCC有三个依赖，同样的，系统上的版本并不能够满足版本要求。三个依赖分别是mpc, mpfr, gmp。如果你有管理员权限请直接用包管理器。。。</p>
+<h2 id="被io折磨">被IO折磨</h2>
+<p>我司集群io极差，你不能想象的那种。你按下cd自动补全比手敲还慢。网速也只有1m，总之emmm。好了我们继续。<br>
+编译R需要readlines依赖（可选，但我建议你加上，不然用不了方向键）,我是参考这个人的<a href="https://davetang.org/muse/2018/02/06/compiling-r-gnu-readline/">文章</a>进行编译的，他说的很清楚，把我从一个大坑里拉了出来。编译时的<code>LDFLAGS</code>和<code>CPPFLAGS</code>如果不写，即使你在别的什么地方指定了readline/ssl/curl，R也是不会认的。（<code>LD_LIBRARY_PATH</code>也要写好）
+经过无数天的素质三连(<code>../configure blahblah</code>然后<code>make -j50</code>然后<code>make install</code>)我往<code>.zshrc</code>里加入了两个alias。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">alias pszll<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mkdir build_dir &amp;&amp; cd build_dir&#34;</span>
+alias szll<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;make -j50 &amp;&amp; make install&#34;</span>
+</code></pre></div><p><code>configure</code>就没写进去了，毕竟那么多参数要改。<br>
+好的，由于集群的io问题，我等待了半天(实指)后终于装好了。<br>
+加入环境变量，设好<code>R_LIBS_USER</code>作为自己以后装包的目录(强烈推荐，这样你在自己装的包出问题之后可以毫无负担地删掉这个目录)
+看上去没什么问题，我表示可以启动R。</p>
+<h2 id="坑爹的irkernel">坑爹的IRkernel</h2>
+<p>由于我最终还是要在Jupyter lab里面使用R的，于是手动安装一个IRkernel。一切正常，直到我发现在jupyter里面执行任何代码都会导致kernel died（<br>
+我发现它报的错误是跟x有关，遂查到<a href="https://github.com/IRkernel/IRkernel/issues/388">这个issue</a>，可是我明明是加了<code>--with-x=no</code>的，实在不知道为什么（<br>
+由于时间有限加上我的工作并不是运维。。。所以我最终屈服了，使用了anaconda来安装R（好水啊这个文章图都没有）。
+当然我也有隔离我的R的！新开了一个环境里面只有R和R包的依赖，然后在要用到python的时候使用别的环境（你能想象我司辣鸡IO让我浪费了多少生命吗）。</p>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2018-12-03</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="https://blog.tpob.xyz/2020/05/21/onedrive-app-%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E7%9A%84%E6%96%87%E4%BB%B6%E6%95%B4%E7%90%86%E8%84%9A%E6%9C%AC/">
+			Next<br>OneDrive app 自动备份的文件整理脚本
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/">
+			Previous<br>一个简陋的pubmed摘要爬虫
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2020 TPOB&#39;s Dustbin
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            }
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+</script>
+
+<script src="https://blog.tpob.xyz//js/journal.js"></script>
+    </body>
+</html>
