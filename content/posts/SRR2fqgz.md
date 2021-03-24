@@ -1,7 +1,7 @@
 ---
 title: "更快下载sra数据库中的fastq.gz文件"
 date: 2021-03-24T14:36:15+08:00
-draft: true
+draft: false
 ---
 
 啊狗屎ncbi的sra数据每次都要`prefetch`下下来再`fastq-dump`/`fasterq-dump`，真的是气死我了，prefetch还是单线程，在众所周知的网络环境下面的速度一言难尽...
