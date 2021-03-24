@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>Categories</title>
+<title>更快下载sra数据库中的fastq.gz文件</title>
 
 
 
@@ -69,7 +69,29 @@ if (!doNotTrack) {
 
 
 
+  
+    <script src="https://blog.tpob.xyz//js/toc-collapse.js"></script>
+  
 
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '7d6430b962cae7ed3df0',
+  clientSecret: 'f7e3d275d9c9861096206aa7711eb60270d6604a',
+  repo: 'blog.tpob.xyz',
+  owner: 'TTTPOB',
+  admin: ['TTTPOB'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -114,6 +136,11 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -131,8 +158,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
         </a>
         
         
-        
-        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -142,6 +167,11 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             
             
             
+            
+            <div class="toc">
+
+
+</div>
             
         </div>
     </div>
@@ -184,27 +214,88 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             <div id="content">
 <div ref="streamContainer" class="stream-container">
     <div class="post-list-container post-list-container-shadow">
-        <a class="a-block">
-            <div class="post-item-wrapper post-item-wrapper-no-hover">
-                <div class="post-item post-item-no-gaps">
-                    <div class="post-item-info-wrapper">
-                        <div class="post-item-title post-item-title-small">
-                            Categories
-                        </div>
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    更快下载sra数据库中的fastq.gz文件
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-03-24 14:36
+                        </time>
+                        
+
+                        
+
+                        
+                        
                     </div>
                 </div>
             </div>
-        </a>
-        
-        
-    </div>
-</div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <p>啊狗屎ncbi的sra数据每次都要<code>prefetch</code>下下来再<code>fastq-dump</code>/<code>fasterq-dump</code>，真的是气死我了，prefetch还是单线程，在众所周知的网络环境下面的速度一言难尽&hellip;</p>
+<p>好在ebi数据库不仅与ncbi同步更新而且还直接给了<code>fastq.gz</code>的下载链接，甚至有给你json api来根据<code>accession number</code>获取，所以我们可以有如下的操作。</p>
+<!-- raw HTML omitted -->
+<p>打开你需要的GSE页面进入<code>SRA RUN Selector</code>，下下来之后里面应该长这样</p>
+<pre><code>cat example.list
+
+SRR000999
+SRR000998
+SRR000997
+</code></pre><p>然后我们使用<a href="https://gist.github.com/TTTPOB/9c52a1ebd10ee7383bda245663e252a0">临时摸出来的这个脚本</a>，和parallel，</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat example.list|parallel SRR2fqgz.py | parallel aria2c -x16 -s16 <span style="color:#f92672">{}</span>
+</code></pre></div><p>它应该就可以下好了</p>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2021-03-24</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/">
+			Next<br>一些小脚本
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://blog.tpob.xyz/2020/12/11/%E5%9C%A8wsl2%E4%B8%8A%E4%BF%AE%E5%A5%BD%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84x11%E8%BD%AC%E5%8F%91/">
+			Previous<br>在WSL2上修好到服务器的X11转发
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
 
 
             </div>
+        </div>
+    </div>
+</div>
 
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>

@@ -6,7 +6,7 @@
     <description>Recent content in Posts on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 11 Dec 2020 13:41:33 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 24 Mar 2021 14:36:15 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一些小脚本</title>
       <link>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
@@ -23,6 +23,19 @@ SGE集群(使用qsub的)查看自己限额 这个跟不同集群设置也有关�
 qconf -srqs quota_on_{队列名字} | grep {用户名} 安装R包缺动态链接库 参看这个回答，核心就是手动指定动态链接库
 withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&amp;#34;haven&amp;#34;), assignment=&amp;#34;+=&amp;#34;) 安装R包出现unable to load shared object &amp;hellip;&amp;hellip; haven.so: undefined symbol: libiconv ERROR: &amp;hellip;&amp;hellip; 错误 参看haven的issue，安装时使用withr::with_makevars(c(PKG_LIBS = &amp;ldquo;-liconv&amp;rdquo;), install.packages(&amp;ldquo;haven&amp;rdquo;), assignment = &amp;ldquo;+=&amp;quot;)即可。其它类似报错也可如法炮制。
 各种依赖ncurses的程序报缺so文件（libncurses.so.6, libtinfo.</description>
+    </item>
+    
+    <item>
+      <title>更快下载sra数据库中的fastq.gz文件</title>
+      <link>https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/</link>
+      <pubDate>Wed, 24 Mar 2021 14:36:15 +0800</pubDate>
+      
+      <guid>https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/</guid>
+      <description>啊狗屎ncbi的sra数据每次都要prefetch下下来再fastq-dump/fasterq-dump，真的是气死我了，prefetch还是单线程，在众所周知的网络环境下面的速度一言难尽&amp;hellip;
+好在ebi数据库不仅与ncbi同步更新而且还直接给了fastq.gz的下载链接，甚至有给你json api来根据accession number获取，所以我们可以有如下的操作。
+打开你需要的GSE页面进入SRA RUN Selector，下下来之后里面应该长这样
+cat example.list SRR000999 SRR000998 SRR000997 然后我们使用临时摸出来的这个脚本，和parallel，
+cat example.list|parallel SRR2fqgz.py | parallel aria2c -x16 -s16 {} 它应该就可以下好了</description>
     </item>
     
     <item>

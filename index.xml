@@ -5,7 +5,7 @@
     <description>Recent content on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 11 Dec 2020 13:41:33 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 24 Mar 2021 14:36:15 +0800</lastBuildDate>
     
         <atom:link href="https://blog.tpob.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -136,6 +136,29 @@ fi
 &lt;h2 id=&#34;丢人git-clone不带submodule&#34;&gt;丢人：git clone不带submodule&lt;/h2&gt;
 &lt;p&gt;加上 &lt;code&gt;--recursive&lt;/code&gt;&lt;/p&gt;
 - https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/ - </description>
+        </item>
+    
+    
+    
+        <item>
+        <title>更快下载sra数据库中的fastq.gz文件</title>
+        <link>https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/</link>
+        <pubDate>Wed, 24 Mar 2021 14:36:15 +0800</pubDate>
+        
+        <guid>https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/</guid>
+        <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/ -&lt;p&gt;啊狗屎ncbi的sra数据每次都要&lt;code&gt;prefetch&lt;/code&gt;下下来再&lt;code&gt;fastq-dump&lt;/code&gt;/&lt;code&gt;fasterq-dump&lt;/code&gt;，真的是气死我了，prefetch还是单线程，在众所周知的网络环境下面的速度一言难尽&amp;hellip;&lt;/p&gt;
+&lt;p&gt;好在ebi数据库不仅与ncbi同步更新而且还直接给了&lt;code&gt;fastq.gz&lt;/code&gt;的下载链接，甚至有给你json api来根据&lt;code&gt;accession number&lt;/code&gt;获取，所以我们可以有如下的操作。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;打开你需要的GSE页面进入&lt;code&gt;SRA RUN Selector&lt;/code&gt;，下下来之后里面应该长这样&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat example.list
+
+SRR000999
+SRR000998
+SRR000997
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后我们使用&lt;a href=&#34;https://gist.github.com/TTTPOB/9c52a1ebd10ee7383bda245663e252a0&#34;&gt;临时摸出来的这个脚本&lt;/a&gt;，和parallel，&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;cat example.list|parallel SRR2fqgz.py | parallel aria2c -x16 -s16 &lt;span style=&#34;color:#f92672&#34;&gt;{}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;它应该就可以下好了&lt;/p&gt;
+- https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/ - </description>
         </item>
     
     
