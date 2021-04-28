@@ -1,10 +1,8 @@
 ---
-title: "Glow"
+title: "命令行markdown渲染工具glow"
 date: 2021-04-28T20:18:40+08:00
 draft: false
 ---
-
-## 命令行markdown渲染工具glow
 
 唉这个实在是太水了但是由于我觉得可以借机宣扬一下在服务器的每个文件夹都放一个`README.md`所以我还是写一个（
 
