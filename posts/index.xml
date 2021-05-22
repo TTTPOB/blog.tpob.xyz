@@ -6,7 +6,7 @@
     <description>Recent content in Posts on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 28 Apr 2021 20:18:40 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 May 2021 19:37:00 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一些小脚本</title>
       <link>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
@@ -23,6 +23,18 @@ SGE集群(使用qsub的)查看自己限额 这个跟不同集群设置也有关�
 qconf -srqs quota_on_{队列名字} | grep {用户名} 安装R包缺动态链接库 参看这个回答，核心就是手动指定动态链接库
 withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&amp;#34;haven&amp;#34;), assignment=&amp;#34;+=&amp;#34;) 安装R包出现unable to load shared object &amp;hellip;&amp;hellip; haven.so: undefined symbol: libiconv ERROR: &amp;hellip;&amp;hellip; 错误 参看haven的issue，安装时使用withr::with_makevars(c(PKG_LIBS = &amp;ldquo;-liconv&amp;rdquo;), install.packages(&amp;ldquo;haven&amp;rdquo;), assignment = &amp;ldquo;+=&amp;quot;)即可。其它类似报错也可如法炮制。
 各种依赖ncurses的程序报缺so文件（libncurses.so.6, libtinfo.</description>
+    </item>
+    
+    <item>
+      <title>有一些人他会犯一些很愚蠢的错误-1</title>
+      <link>https://blog.tpob.xyz/2021/05/21/%E6%9C%89%E4%B8%80%E4%BA%9B%E4%BA%BA%E4%BB%96%E4%BC%9A%E7%8A%AF%E4%B8%80%E4%BA%9B%E5%BE%88%E6%84%9A%E8%A0%A2%E7%9A%84%E9%94%99%E8%AF%AF-1/</link>
+      <pubDate>Fri, 21 May 2021 19:37:00 +0800</pubDate>
+      
+      <guid>https://blog.tpob.xyz/2021/05/21/%E6%9C%89%E4%B8%80%E4%BA%9B%E4%BA%BA%E4%BB%96%E4%BC%9A%E7%8A%AF%E4%B8%80%E4%BA%9B%E5%BE%88%E6%84%9A%E8%A0%A2%E7%9A%84%E9%94%99%E8%AF%AF-1/</guid>
+      <description>唉有的人吧屁事不干文章也不想看，就想水。但是呢他又很菜没什么可以水的，而且每天还犯一堆错误；那既然如此为什么不开一个贴子记下来呢（
+2021.05.21 这人bowtie2 index格式都可以记错 嗯是的我知道这里不应该有.fa，但我居然排除了一下午。
+以及我强烈谴责写脚本碰到异常不退出的行为，我翻日志都不知道哪里错的（
+为了其它找不到问题在哪里的人说不定可以搜到这个文章我把可能会搜索的东西放在这里 (FILE LOCATION) does not exist or is not a Bowtie 2 index</description>
     </item>
     
     <item>
