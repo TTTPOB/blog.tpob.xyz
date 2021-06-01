@@ -171,6 +171,24 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 					
 				
 			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#20210601-%e8%bf%99%e4%ba%ba%e4%b9%8b%e5%89%8d%e8%af%b4ebincbi%e7%9a%84%e6%b5%8b%e5%ba%8f%e6%95%b0%e6%8d%ae%e6%b2%a1%e7%bb%99checksum%e4%b8%8d%e8%83%bd%e9%aa%8c%e8%af%81%e5%ae%8c%e6%95%b4%e6%80%a7" onclick="onNavClick(`#20210601-这人之前说ebincbi的测序数据没给checksum不能验证完整性-nav`)" id="20210601-这人之前说ebincbi的测序数据没给checksum不能验证完整性-nav">
+									2021.06.01 这人之前说ebi/ncbi的测序数据没给checksum不能验证完整性
+								</a>
+							</li>
+						
+						
+					
+				
+			
 		</ul>
 	</div>
 
@@ -231,6 +249,24 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 							<li>
 								<a href="#20210521-%e8%bf%99%e4%ba%babowtie2-index%e6%a0%bc%e5%bc%8f%e9%83%bd%e5%8f%af%e4%bb%a5%e8%ae%b0%e9%94%99" onclick="onNavClick(`#20210521-这人bowtie2-index格式都可以记错-nav`)" id="20210521-这人bowtie2-index格式都可以记错-nav">
 									2021.05.21 这人bowtie2 index格式都可以记错
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#20210601-%e8%bf%99%e4%ba%ba%e4%b9%8b%e5%89%8d%e8%af%b4ebincbi%e7%9a%84%e6%b5%8b%e5%ba%8f%e6%95%b0%e6%8d%ae%e6%b2%a1%e7%bb%99checksum%e4%b8%8d%e8%83%bd%e9%aa%8c%e8%af%81%e5%ae%8c%e6%95%b4%e6%80%a7" onclick="onNavClick(`#20210601-这人之前说ebincbi的测序数据没给checksum不能验证完整性-nav`)" id="20210601-这人之前说ebincbi的测序数据没给checksum不能验证完整性-nav">
+									2021.06.01 这人之前说ebi/ncbi的测序数据没给checksum不能验证完整性
 								</a>
 							</li>
 						
@@ -322,6 +358,13 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <code>(FILE LOCATION) does not exist or is not a Bowtie 2 index</code></p>
 <p><img src="https://cdn.jsdelivr.net/gh/TTTPOB/imageHost/20210521194119.png" alt="脚本里的路径">
 <img src="https://cdn.jsdelivr.net/gh/TTTPOB/imageHost/20210521194231.png" alt="这个目录里面的东西"></p>
+<h2 id="20210601-这人之前说ebincbi的测序数据没给checksum不能验证完整性">2021.06.01 这人之前说ebi/ncbi的测序数据没给checksum不能验证完整性</h2>
+<p>万一有人记得我写过一个<a href="https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/">特小脚本</a>来从ebi直接下<code>fastq.gz</code>数据以免被<code>sratoolkit</code>慢死。</p>
+<p>但是这样不带checksum下下来文件损坏也不知道，心里很慌，所以我到处喷ncbi/ebi的ftp站点不给文件放checksum，今天把一个巨大的<code>fastq.gz</code>文件扔进pipeline里面之后才知道是损坏的，非常浪费时间。</p>
+<p>但实际上<code>gzip</code>文件内部是自带有checksum的，虽然是比较弱的<code>CRC32</code>但是也可以基本保证正确性了，使用也非常简单，只需要<code>gzip -v -t theFile.gz</code>就可以了。结果大概长这样：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/TTTPOB/imageHost/20210601203859.png" alt="结果的样子"></p>
+<p>当然啦，嫌慢的话总可以用神奇的<code>parallel</code>：<code>ls *gz|parallel -j4 gzip -v -t {}</code>(当心线程太多把服务器io卡爆)。</p>
+<p>搜索关键词：gzip checksum ncbi ebi sra fastq 数据完整性校验</p>
 
                     
                     <HR width="100%" id="EOF">

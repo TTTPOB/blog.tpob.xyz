@@ -34,7 +34,12 @@ withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&am
       <description>唉有的人吧屁事不干文章也不想看，就想水。但是呢他又很菜没什么可以水的，而且每天还犯一堆错误；那既然如此为什么不开一个贴子记下来呢（
 2021.05.21 这人bowtie2 index格式都可以记错 嗯是的我知道这里不应该有.fa，但我居然排除了一下午。
 以及我强烈谴责写脚本碰到异常不退出的行为，我翻日志都不知道哪里错的（
-为了其它找不到问题在哪里的人说不定可以搜到这个文章我把可能会搜索的东西放在这里 (FILE LOCATION) does not exist or is not a Bowtie 2 index</description>
+为了其它找不到问题在哪里的人说不定可以搜到这个文章我把可能会搜索的东西放在这里 (FILE LOCATION) does not exist or is not a Bowtie 2 index
+2021.06.01 这人之前说ebi/ncbi的测序数据没给checksum不能验证完整性 万一有人记得我写过一个特小脚本来从ebi直接下fastq.gz数据以免被sratoolkit慢死。
+但是这样不带checksum下下来文件损坏也不知道，心里很慌，所以我到处喷ncbi/ebi的ftp站点不给文件放checksum，今天把一个巨大的fastq.gz文件扔进pipeline里面之后才知道是损坏的，非常浪费时间。
+但实际上gzip文件内部是自带有checksum的，虽然是比较弱的CRC32但是也可以基本保证正确性了，使用也非常简单，只需要gzip -v -t theFile.gz就可以了。结果大概长这样：
+当然啦，嫌慢的话总可以用神奇的parallel：ls *gz|parallel -j4 gzip -v -t {}(当心线程太多把服务器io卡爆)。
+搜索关键词：gzip checksum ncbi ebi sra fastq 数据完整性校验</description>
     </item>
     
     <item>
