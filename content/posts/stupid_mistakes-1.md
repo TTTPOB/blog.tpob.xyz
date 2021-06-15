@@ -32,3 +32,23 @@ draft: false
 当然啦，嫌慢的话总可以用神奇的`parallel`：`ls *gz|parallel -j4 gzip -v -t {}`(当心线程太多把服务器io卡爆)。
 
 搜索关键词：gzip checksum ncbi ebi sra fastq 数据完整性校验
+
+## 2021.06.15 他被jupyter IRKernel不该输出的图片折磨了一天然后发现很简单可以关掉
+
+有的时候你被迫使用`base r`的绘图工具进行画图，比如很简单的画一个density，但如果你在对一个循环/`lapply`做这件事，那你会被输出的图片占满整个屏幕，太长了滚动起来也不方便；即使你使用`grid.echo();p1<-grid.grab()%>%as.ggplot()`来保存了这张图片（转换成ggplot对象），但画图的时候还是不可避免地会输出在cell的output里，即使你使用了[invisible](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/invisible)（很好理解，它只是不让对象显示，但`plot`也不是这样显示出来的）。但我刚刚突然想到我直接
+
+```R
+library(magrittr)
+library(grid)
+library(gridGraphics)
+library(ggplotify)
+
+## 我直接在这里把结果输出到null设备不就好了吗
+pdf(file="/dev/null",w=1,h=1)
+plot(1,1)
+grid.echo()
+p1<-grid.grab()%>%as.ggplot
+dev.off()
+```
+我直接把结果输出到`/dev/null`不就好了吗！
+（突然觉得我是不是应该用`jupyter`写blog，反正也是markdown）
