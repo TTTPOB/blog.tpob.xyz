@@ -189,6 +189,24 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 					
 				
 			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#20210615-%e4%bb%96%e8%a2%abjupyter-irkernel%e4%b8%8d%e8%af%a5%e8%be%93%e5%87%ba%e7%9a%84%e5%9b%be%e7%89%87%e6%8a%98%e7%a3%a8%e4%ba%86%e4%b8%80%e5%a4%a9%e7%84%b6%e5%90%8e%e5%8f%91%e7%8e%b0%e5%be%88%e7%ae%80%e5%8d%95%e5%8f%af%e4%bb%a5%e5%85%b3%e6%8e%89" onclick="onNavClick(`#20210615-他被jupyter-irkernel不该输出的图片折磨了一天然后发现很简单可以关掉-nav`)" id="20210615-他被jupyter-irkernel不该输出的图片折磨了一天然后发现很简单可以关掉-nav">
+									2021.06.15 他被jupyter IRKernel不该输出的图片折磨了一天然后发现很简单可以关掉
+								</a>
+							</li>
+						
+						
+					
+				
+			
 		</ul>
 	</div>
 
@@ -267,6 +285,24 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 							<li>
 								<a href="#20210601-%e8%bf%99%e4%ba%ba%e4%b9%8b%e5%89%8d%e8%af%b4ebincbi%e7%9a%84%e6%b5%8b%e5%ba%8f%e6%95%b0%e6%8d%ae%e6%b2%a1%e7%bb%99checksum%e4%b8%8d%e8%83%bd%e9%aa%8c%e8%af%81%e5%ae%8c%e6%95%b4%e6%80%a7" onclick="onNavClick(`#20210601-这人之前说ebincbi的测序数据没给checksum不能验证完整性-nav`)" id="20210601-这人之前说ebincbi的测序数据没给checksum不能验证完整性-nav">
 									2021.06.01 这人之前说ebi/ncbi的测序数据没给checksum不能验证完整性
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#20210615-%e4%bb%96%e8%a2%abjupyter-irkernel%e4%b8%8d%e8%af%a5%e8%be%93%e5%87%ba%e7%9a%84%e5%9b%be%e7%89%87%e6%8a%98%e7%a3%a8%e4%ba%86%e4%b8%80%e5%a4%a9%e7%84%b6%e5%90%8e%e5%8f%91%e7%8e%b0%e5%be%88%e7%ae%80%e5%8d%95%e5%8f%af%e4%bb%a5%e5%85%b3%e6%8e%89" onclick="onNavClick(`#20210615-他被jupyter-irkernel不该输出的图片折磨了一天然后发现很简单可以关掉-nav`)" id="20210615-他被jupyter-irkernel不该输出的图片折磨了一天然后发现很简单可以关掉-nav">
+									2021.06.15 他被jupyter IRKernel不该输出的图片折磨了一天然后发现很简单可以关掉
 								</a>
 							</li>
 						
@@ -365,6 +401,21 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <p><img src="https://cdn.jsdelivr.net/gh/TTTPOB/imageHost/20210601203859.png" alt="结果的样子"></p>
 <p>当然啦，嫌慢的话总可以用神奇的<code>parallel</code>：<code>ls *gz|parallel -j4 gzip -v -t {}</code>(当心线程太多把服务器io卡爆)。</p>
 <p>搜索关键词：gzip checksum ncbi ebi sra fastq 数据完整性校验</p>
+<h2 id="20210615-他被jupyter-irkernel不该输出的图片折磨了一天然后发现很简单可以关掉">2021.06.15 他被jupyter IRKernel不该输出的图片折磨了一天然后发现很简单可以关掉</h2>
+<p>有的时候你被迫使用<code>base r</code>的绘图工具进行画图，比如很简单的画一个density，但如果你在对一个循环/<code>lapply</code>做这件事，那你会被输出的图片占满整个屏幕，太长了滚动起来也不方便；即使你使用<code>grid.echo();p1&lt;-grid.grab()%&gt;%as.ggplot()</code>来保存了这张图片（转换成ggplot对象），但画图的时候还是不可避免地会输出在cell的output里，即使你使用了<a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/invisible">invisible</a>（很好理解，它只是不让对象显示，但<code>plot</code>也不是这样显示出来的）。但我刚刚突然想到我直接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-R" data-lang="R"><span style="color:#a6e22e">library</span>(magrittr)
+<span style="color:#a6e22e">library</span>(grid)
+<span style="color:#a6e22e">library</span>(gridGraphics)
+<span style="color:#a6e22e">library</span>(ggplotify)
+
+<span style="color:#75715e">## 我直接在这里把结果输出到null设备不就好了吗</span>
+<span style="color:#a6e22e">pdf</span>(file<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/dev/null&#34;</span>,w<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>,h<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+<span style="color:#a6e22e">plot</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>)
+<span style="color:#a6e22e">grid.echo</span>()
+p1<span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">grid.grab</span>()<span style="color:#f92672">%&gt;%</span>as.ggplot
+<span style="color:#a6e22e">dev.off</span>()
+</code></pre></div><p>我直接把结果输出到<code>/dev/null</code>不就好了吗！
+（突然觉得我是不是应该用<code>jupyter</code>写blog，反正也是markdown）</p>
 
                     
                     <HR width="100%" id="EOF">

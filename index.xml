@@ -161,6 +161,21 @@ fi
 &lt;p&gt;&lt;img src=&#34;https://cdn.jsdelivr.net/gh/TTTPOB/imageHost/20210601203859.png&#34; alt=&#34;结果的样子&#34;&gt;&lt;/p&gt;
 &lt;p&gt;当然啦，嫌慢的话总可以用神奇的&lt;code&gt;parallel&lt;/code&gt;：&lt;code&gt;ls *gz|parallel -j4 gzip -v -t {}&lt;/code&gt;(当心线程太多把服务器io卡爆)。&lt;/p&gt;
 &lt;p&gt;搜索关键词：gzip checksum ncbi ebi sra fastq 数据完整性校验&lt;/p&gt;
+&lt;h2 id=&#34;20210615-他被jupyter-irkernel不该输出的图片折磨了一天然后发现很简单可以关掉&#34;&gt;2021.06.15 他被jupyter IRKernel不该输出的图片折磨了一天然后发现很简单可以关掉&lt;/h2&gt;
+&lt;p&gt;有的时候你被迫使用&lt;code&gt;base r&lt;/code&gt;的绘图工具进行画图，比如很简单的画一个density，但如果你在对一个循环/&lt;code&gt;lapply&lt;/code&gt;做这件事，那你会被输出的图片占满整个屏幕，太长了滚动起来也不方便；即使你使用&lt;code&gt;grid.echo();p1&amp;lt;-grid.grab()%&amp;gt;%as.ggplot()&lt;/code&gt;来保存了这张图片（转换成ggplot对象），但画图的时候还是不可避免地会输出在cell的output里，即使你使用了&lt;a href=&#34;https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/invisible&#34;&gt;invisible&lt;/a&gt;（很好理解，它只是不让对象显示，但&lt;code&gt;plot&lt;/code&gt;也不是这样显示出来的）。但我刚刚突然想到我直接&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-R&#34; data-lang=&#34;R&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;library&lt;/span&gt;(magrittr)
+&lt;span style=&#34;color:#a6e22e&#34;&gt;library&lt;/span&gt;(grid)
+&lt;span style=&#34;color:#a6e22e&#34;&gt;library&lt;/span&gt;(gridGraphics)
+&lt;span style=&#34;color:#a6e22e&#34;&gt;library&lt;/span&gt;(ggplotify)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;## 我直接在这里把结果输出到null设备不就好了吗&lt;/span&gt;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;pdf&lt;/span&gt;(file&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/dev/null&amp;#34;&lt;/span&gt;,w&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,h&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;span style=&#34;color:#a6e22e&#34;&gt;plot&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;span style=&#34;color:#a6e22e&#34;&gt;grid.echo&lt;/span&gt;()
+p1&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;grid.grab&lt;/span&gt;()&lt;span style=&#34;color:#f92672&#34;&gt;%&amp;gt;%&lt;/span&gt;as.ggplot
+&lt;span style=&#34;color:#a6e22e&#34;&gt;dev.off&lt;/span&gt;()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我直接把结果输出到&lt;code&gt;/dev/null&lt;/code&gt;不就好了吗！
+（突然觉得我是不是应该用&lt;code&gt;jupyter&lt;/code&gt;写blog，反正也是markdown）&lt;/p&gt;
 - https://blog.tpob.xyz/2021/05/21/%E6%9C%89%E4%B8%80%E4%BA%9B%E4%BA%BA%E4%BB%96%E4%BC%9A%E7%8A%AF%E4%B8%80%E4%BA%9B%E5%BE%88%E6%84%9A%E8%A0%A2%E7%9A%84%E9%94%99%E8%AF%AF-1/ - </description>
         </item>
     

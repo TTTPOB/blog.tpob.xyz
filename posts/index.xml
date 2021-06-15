@@ -39,7 +39,9 @@ withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&am
 但是这样不带checksum下下来文件损坏也不知道，心里很慌，所以我到处喷ncbi/ebi的ftp站点不给文件放checksum，今天把一个巨大的fastq.gz文件扔进pipeline里面之后才知道是损坏的，非常浪费时间。
 但实际上gzip文件内部是自带有checksum的，虽然是比较弱的CRC32但是也可以基本保证正确性了，使用也非常简单，只需要gzip -v -t theFile.gz就可以了。结果大概长这样：
 当然啦，嫌慢的话总可以用神奇的parallel：ls *gz|parallel -j4 gzip -v -t {}(当心线程太多把服务器io卡爆)。
-搜索关键词：gzip checksum ncbi ebi sra fastq 数据完整性校验</description>
+搜索关键词：gzip checksum ncbi ebi sra fastq 数据完整性校验
+2021.06.15 他被jupyter IRKernel不该输出的图片折磨了一天然后发现很简单可以关掉 有的时候你被迫使用base r的绘图工具进行画图，比如很简单的画一个density，但如果你在对一个循环/lapply做这件事，那你会被输出的图片占满整个屏幕，太长了滚动起来也不方便；即使你使用grid.echo();p1&amp;lt;-grid.grab()%&amp;gt;%as.ggplot()来保存了这张图片（转换成ggplot对象），但画图的时候还是不可避免地会输出在cell的output里，即使你使用了invisible（很好理解，它只是不让对象显示，但plot也不是这样显示出来的）。但我刚刚突然想到我直接
+library(magrittr) library(grid) library(gridGraphics) library(ggplotify) ## 我直接在这里把结果输出到null设备不就好了吗 pdf(file=&amp;#34;/dev/null&amp;#34;,w=1,h=1) plot(1,1) grid.echo() p1&amp;lt;-grid.grab()%&amp;gt;%as.ggplot dev.off() 我直接把结果输出到/dev/null不就好了吗！ （突然觉得我是不是应该用jupyter写blog，反正也是markdown）</description>
     </item>
     
     <item>
