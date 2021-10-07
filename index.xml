@@ -5,7 +5,7 @@
     <description>Recent content on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 21 May 2021 19:37:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 07 Oct 2021 18:43:09 +0800</lastBuildDate>
     
         <atom:link href="https://blog.tpob.xyz/index.xml" rel="self" type="application/rss+xml" />
     
@@ -136,6 +136,61 @@ fi
 &lt;h2 id=&#34;丢人git-clone不带submodule&#34;&gt;丢人：git clone不带submodule&lt;/h2&gt;
 &lt;p&gt;加上 &lt;code&gt;--recursive&lt;/code&gt;&lt;/p&gt;
 - https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/ - </description>
+        </item>
+    
+    
+    
+        <item>
+        <title>一台机器上有好几套conda怎么办</title>
+        <link>https://blog.tpob.xyz/2021/10/07/%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E6%9C%89%E5%A5%BD%E5%87%A0%E5%A5%97conda%E6%80%8E%E4%B9%88%E5%8A%9E/</link>
+        <pubDate>Thu, 07 Oct 2021 18:43:09 +0800</pubDate>
+        
+        <guid>https://blog.tpob.xyz/2021/10/07/%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E6%9C%89%E5%A5%BD%E5%87%A0%E5%A5%97conda%E6%80%8E%E4%B9%88%E5%8A%9E/</guid>
+        <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2021/10/07/%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E6%9C%89%E5%A5%BD%E5%87%A0%E5%A5%97conda%E6%80%8E%E4%B9%88%E5%8A%9E/ -&lt;p&gt;其实这一篇也很水，可是又好几个月不更新了我能怎么办呢&lt;/p&gt;
+&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
+&lt;p&gt;故事是这样的：&lt;/p&gt;
+&lt;p&gt;我们实验室用在我来之前就用&lt;a href=&#34;https://docs.conda.io/projects/conda/en/latest/user-guide/configuration/admin-multi-user-install.html&#34;&gt;全局安装&lt;/a&gt;的办法装了一套公用的conda，可是我当时没有管理员权限，不好换mamba或者进行类似的操作，所以用起来很难受，所以我就往自己的&lt;code&gt;$HOME&lt;/code&gt;里装了自己的&lt;code&gt;miniconda&lt;/code&gt;，但是给其它同学debug的时候经常要回到系统自带的conda环境里面，我就很烦，前两天就往自己的&lt;code&gt;.zshrc&lt;/code&gt;里面写了个：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-zsh&#34; data-lang=&#34;zsh&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; use_system_conda&lt;span style=&#34;color:#f92672&#34;&gt;(){&lt;/span&gt;
+  __conda_setup&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/lab_public/shared/applications/conda/miniconda3/bin/conda&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;shell.bash&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;hook&amp;#39;&lt;/span&gt; 2&amp;gt; /dev/null&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; $? -eq &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
+      eval &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$__conda_setup&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; -f &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/lab_public/shared/applications/conda/miniconda3/etc/profile.d/conda.sh&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
+          . &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/lab_public/shared/applications/conda/miniconda3/etc/profile.d/conda.sh&amp;#34;&lt;/span&gt;
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+          export PATH&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/lab_public/shared/applications/conda/miniconda3/bin:&lt;/span&gt;$PATH&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;fi&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;fi&lt;/span&gt;
+  unset __conda_setup
+  export WHICH_CONDA__&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;system conda&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; use_own_conda&lt;span style=&#34;color:#f92672&#34;&gt;(){&lt;/span&gt;
+  __conda_setup&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;$(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;/home/my_user_name/anaconda/bin/conda&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;shell.zsh&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;hook&amp;#39;&lt;/span&gt; 2&amp;gt; /dev/null&lt;span style=&#34;color:#66d9ef&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; $? -eq &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
+      eval &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;$__conda_setup&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt; -f &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/home/my_user_name/anaconda/etc/profile.d/conda.sh&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;; &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt;
+          . &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/home/my_user_name/anaconda/etc/profile.d/conda.sh&amp;#34;&lt;/span&gt;
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;
+          export PATH&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/home/my_user_name/anaconda/bin:&lt;/span&gt;$PATH&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;fi&lt;/span&gt;
+  &lt;span style=&#34;color:#66d9ef&#34;&gt;fi&lt;/span&gt;
+  unset __conda_setup
+  export WHICH_CONDA__&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;own conda&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+use_own_conda
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; get_which_conda&lt;span style=&#34;color:#f92672&#34;&gt;(){&lt;/span&gt;
+    echo $WHICH_CONDA__
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+PROMPT&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%F{blue}(\$(get_which_conda))%f&lt;/span&gt;$PROMPT&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样就方便多了，我想用自己的conda就&lt;code&gt;use_own_conda&lt;/code&gt;(默认)想用系统的conda就&lt;code&gt;use_system_conda&lt;/code&gt;，最后面一行还往prompt里面加了个提示提醒我用的是哪一个(是的我今天用错了才加的)，如果有使用&lt;code&gt;bash&lt;/code&gt;的同学想抄作业记得改一下设置prompt的操作，这个是&lt;code&gt;zsh&lt;/code&gt; only的，它设置颜色什么的要方便一些。&lt;/p&gt;
+&lt;p&gt;效果嘛&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://cdn.jsdelivr.net/gh/TTTPOB/imageHost/20211007191250.png&#34; alt=&#34;效果图&#34;&gt;&lt;/p&gt;
+- https://blog.tpob.xyz/2021/10/07/%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E6%9C%89%E5%A5%BD%E5%87%A0%E5%A5%97conda%E6%80%8E%E4%B9%88%E5%8A%9E/ - </description>
         </item>
     
     
@@ -468,84 +523,6 @@ headers &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {
 还有新出的Surface Go和Surface Book 2都有USB Type-C接口，就Surface Pro没有；再加上几代不变的外观，很让人怀疑就是为了清旧模具库存的啊。
 我没有用过其它的二合一产品，不知道是不是最好用的二合一产品。但如果真的是，那Windows阵营确实非常差劲。隔壁苹果的iPad Pro已经要到了Surface的价格，也许下了Like a computer的豪言，以苹果对开发者的号召力，迎头赶上也是指日可待；隔壁Google说了几年的Fuchsia系统最近也有了新动静。算上全球所有电子设备，Windows早已落人一头，虽说咎由自取，但谁不希望自己用的电脑能够越来越好用呢？&lt;/p&gt;
 - https://blog.tpob.xyz/2018/11/14/surface-pro-6%E7%AE%80%E8%AF%84/ - </description>
-        </item>
-    
-    
-    
-        <item>
-        <title>为什么湖北有这么多黄*地名</title>
-        <link>https://blog.tpob.xyz/2018/10/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B9%96%E5%8C%97%E6%9C%89%E8%BF%99%E4%B9%88%E5%A4%9A%E9%BB%84%E5%9C%B0%E5%90%8D/</link>
-        <pubDate>Fri, 26 Oct 2018 16:15:33 +0000</pubDate>
-        
-        <guid>https://blog.tpob.xyz/2018/10/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B9%96%E5%8C%97%E6%9C%89%E8%BF%99%E4%B9%88%E5%A4%9A%E9%BB%84%E5%9C%B0%E5%90%8D/</guid>
-        <description>TPOB&#39;s Dustbin https://blog.tpob.xyz/2018/10/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B9%96%E5%8C%97%E6%9C%89%E8%BF%99%E4%B9%88%E5%A4%9A%E9%BB%84%E5%9C%B0%E5%90%8D/ -&lt;h1 id=&#34;为什么湖北有这么多黄地名&#34;&gt;为什么湖北有这么多黄*地名&lt;/h1&gt;
-&lt;h2 id=&#34;问题缘起&#34;&gt;问题缘起&lt;/h2&gt;
-&lt;p&gt;前些日子接机，遇到一个北京基因组所的老师，她问我哪里人我说黄冈人，她表示老乡，说是北京二代移民，原来也是这边的人。聊了一会她突然问我：“我来考一考你，为什么湖北这么多黄*地名，黄安黄陂黄梅黄冈黄石，全国其他地方没有这个样子的。我之前也问过好多人，他们给出的答案我都觉得不对，希望你能查一查然后告诉我。”。我想起几个月前翻看图书馆古地图时，最早一幅图是明朝，这些地名很多都已确定下来，我想应当有一个统一的原因，加之我觉得这个问题确实很有意思，于是答应下来。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;远离学校图书馆的悲伤&#34;&gt;远离学校图书馆的悲伤&lt;/h2&gt;
-&lt;p&gt;我校图书馆有大量文史藏书、各种方志、古地图集等。可惜我在外实习无法借阅，只得上网搜索。互联网资料浩如烟海鱼龙混杂，查到的许多说法都相互抵触，辨别起来十分不易。&lt;/p&gt;
-&lt;h2 id=&#34;先从黄州开始&#34;&gt;先从黄州开始&lt;/h2&gt;
-&lt;p&gt;外事不决问Google，直接搜索黄冈地名来历得不到什么有利的信息，搜索黄州(黄冈古为县级行政单位，是黄州的州治所在)沿革得梁敢雄先生考证长文一篇(后附)，里面提到唐宋时人共识黄州春秋时为黄国之地，后加以驳斥，言应为弦国故地(考见另文，然而我并未能够找到)。此文对回答地名从何而来帮助不大，然而作者另一篇文章提到一座山叫做黄冈山，清代起，由于山上修筑声闻全城的鼓楼，改名鼓楼岗。此山及苏轼《后赤壁赋》中“过黄泥之坂”之所在，不知黄冈山和黄冈孰先孰后。查得《今县释名》中有记：“西北有黄冈山，因古黄国得名。”&lt;br&gt;
-似乎问题得以解决。黄国，是春秋时期的一个子爵小国，治所在今河南信阳潢川县。追根溯源是黄帝之子少昊后裔开创九夷中的黄夷，因图腾为黄鸟得名。黄夷的后代赢姓伯益长子大廉，字太康，建立了黄国，所以黄国为赢姓黄氏。&lt;br&gt;
-然而，问题出现了，黄国是一个子爵小国，河南信阳距黄冈市距离不短，并非一个子爵国能够控制的范围。前述黄国为黄氏启发我可以试着查查黄姓相关的资料，查得如下:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;近年来，有学者提出一个新的发现：春秋时期有两个黄国，一个是潢川的黄国，另外还有一个西黄国，在今湖北宜城市东南的汉水以东、大富水以西、古随国西南，因为太小，一直鲜为人知。&amp;hellip;&amp;hellip;
-周朝取代商朝后，如今的黄姓家谱中大都有“黄石佐周，以功封黄，赐姓黄氏，食郡江夏”的记载。&lt;br&gt;
-来自黄国的黄石，辅佐周武王灭掉商朝有功，周武王自然要对功臣进行封赏。但把他封赏在哪里呢？&lt;br&gt;
-周武王看到，在南方江汉流域的殷商旧部和一些少数民族并不服从周朝的管辖和统治，经常起兵反抗。&lt;br&gt;
-黄国离江汉流域并不远，可以利用黄国对那里进行控制。&lt;br&gt;
-于是，周武王把黄石封到江夏，让子爵黄国的领土扩大，条件是黄石要把黄国的人口迁移一些到江夏去。&lt;br&gt;
-黄石及其后人按照周武王的战略部署，逐步把黄国的民众迁徙到江汉流域，在江夏建立了新的国家，江夏成为黄姓的第二故乡，也是全国最著名、最兴盛、最有影响力的黄姓发祥地。&lt;br&gt;
-有学者认为，黄石在江夏建立的新黄国，就是西黄国。&lt;br&gt;
-周朝时，黄国的势力渐渐发展起来，与淮水流域的江、道、柏、弦等赢姓国结成了同盟，并成为盟主。&lt;br&gt;
-同时，又通过与姬姓小国联姻等方式，改善与周朝及中原各国的关系。&lt;br&gt;
-这时，南方的楚国日益强大，不断向扩张势力，黄国加强与各赢姓诸国的同盟，与姬姓随国结成同盟，一起抵抗楚国的威胁和进攻。&lt;br&gt;
-公元前658年，黄国与江国参加了齐侯主持的贯之盟会，第二年又参加阳谷之盟，与齐、宋、郑、卫、鲁等国结成了反楚同盟。&lt;br&gt;
-两年后，黄国参与了齐、鲁、宋、卫等同盟国攻打楚国好伙伴陈国的军事行动。&lt;br&gt;
-楚国毛了，决定对黄国进行报复。&lt;br&gt;
-公元前649年冬，楚国以黄国不向楚王纳贡为借口，大举入侵黄国。&lt;br&gt;
-黄国国君一直认为有齐、鲁等大哥们罩着，楚国不敢动自己，军事上疏于防范，在楚国大军面前，黄国军队不堪一击。&lt;br&gt;
-公元前648年夏，黄国被楚国灭亡。&lt;br&gt;
-黄国被灭，国人为纪念黄国，以国为姓。&lt;br&gt;
-黄国所在地，在夏、商朝被称为黄邑，西周、春秋时被称为黄国，楚国灭掉黄国后又称为黄邑，秦汉时期被称为光山，也就是今河南潢川县。&lt;br&gt;
-黄国故城遗址至今仍在，保存完好，被列入河南省级重点文物保护单位。&lt;br&gt;
-存在时间长达1500多年的黄国被楚国兼并后，国人为纪念黄国，以国为姓。&lt;br&gt;
-国没有了，黄姓族人四散开去，一部分人逃亡到中原的各大诸侯国，形成了后来的淮阳黄氏。&lt;br&gt;
-大量族人进入今湖北黄陂、黄冈、黄安、黄梅、黄石等地，这些地名因黄姓人入居而得名。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;看上去说得很有道理，然而我想起黄石似乎并不是如此得名。印象中黄石仅仅是因色得名。随后发现知乎上有一个跟老师提的问题几乎一模一样的问题，有人给出意见是这是凭空臆想牵强附会之说，没有什么证据表明这些地名与黄国人口迁居有关。线索断掉。&lt;/p&gt;
-&lt;h2 id=&#34;确有其事的黄陂&#34;&gt;确有其事的黄陂&lt;/h2&gt;
-&lt;p&gt;黄陂由来倒是有一个确切说法，三国时刘表使手下黄祖于江夏筑城防守，黄祖以姓名城，名曰黄城镇，北齐改名为黄陂，是将黄城与武湖合称。百科说黄州是因置州时治所在黄城镇得名。梁敢雄先生的文章更加详细地说明了这一点，原文略长，引用不变，牵扯到以邾城为治所的几个郡、州的复杂严格问题，链接附于文后。&lt;br&gt;
-因而我们得知，黄州之名并非来源于黄冈，而是来源于黄陂。实际上黄冈县得名于隋开皇十八年，北齐合并齐安郡下多县为南安一县，隋改南安为黄冈。早些时候，开皇五年，前代衡州改名黄州，前代黄州降格为黄陂县。这才有黄州州治迁往黄冈县。
-说回黄祖，黄祖是江夏黄姓，理应确与黄国有关，如此说来，黄州也算是与黄国搭上关系了。&lt;/p&gt;
-&lt;h2 id=&#34;几易其名的红安&#34;&gt;几易其名的红安&lt;/h2&gt;
-&lt;p&gt;红安县，往前数有两个名字，最初叫做新安县，后来叫做黄安县。搜得文章一篇，详述沿革。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;提起“新安”，还要从红安建县的历史谈起。&lt;br&gt;
-红安这地方，在447年建县以前，也就在公元1563年（明朝嘉靖42年）以前，是黄冈、黄陂、麻城三县的交接处，属于三不管的地方。由于地处偏僻，交通不便，匪盗猖獗。土匪、强盗经常在这一带聚集，抢劫偷盗老百姓的财物，甚至杀人放火，各类案件层出不穷，于是有人就到黄冈县去告状，黄冈县说，你们这块地方不归我县管，我们管不了。人们就跑到黄陂县去告状，黄陂县也说，你们这块地方不归我县管，我们管不了。人们又跑到麻城县去告状，麻城县也说，你们这块地方不归我县管，我们管不了。都不管。是一个典型的“三不管”地区。这正是：匪盗猖獗，告状无门，百姓遭殃，难以生存。&lt;br&gt;
-在这种情况下，怎么办？这时引起了麻城县两位监生秦钺和李大夏的注意。所谓“监生”，就是明朝选到国子监读书的学生，统称为监生。他们在明朝嘉靖21年（公元1542年）上书朝廷，请求建县。这个建议，得到巡抚湖广右副都御史陆杰和巡按湖广监察御史史保善的赞同，都力主建县。可是这个建议，遭到了一部分人的强烈反对与阻挠，讲了很多建县的困难，使得这次上书建县的请求没能成功。&lt;br&gt;
-明嘉靖26年（1547年），黄州知府郭凤仪上书驳斥了“建县困难”的言论，陈述了建县的必要性，说建县是“益国便民，最为要务”之事。他的这个主张，得到后为黄安人耿定向的支持，他为建县的事写信给前湖广右副都御史冯岳，冯岳也力主建县。但由于这些地方的官员不断变动，无人再管，这样建县的主张又被搁置下来。直到13年以后，即明嘉靖39年（1560年），耿定向这时已升任户部尚书。户部尚书就是掌管全国土地、户籍、赋税、财政收支等事务的最高长官，相当于我们现在一些相关部的部长和财政部长。他有资格会见京城的其他高官和朝拜嘉靖皇帝。这样他在京师会见了新任湖广巡抚刘伦，与他面议建县的事。刘伦极为重视，赴任后即将建县的任务交给了麻城县令苏松办理。哪知刘伦上任不久就被调走了，接任刘伦巡抚职务的名叫张雨，他不了解情况，使建县之事又泡了汤。&lt;br&gt;
-明嘉靖40年（1561年），耿定向奉命视察西夏，在宜城道上与继任湖广巡抚张雨相会，又与张雨洽商建县的事。这时，监生王国任同一些父老乡亲又联名上书要求建县，于是，张雨要他的下属集体讨论建县的事，官员们都表示赞同。这样，建县的事才算定了下来。明嘉靖41年（1562年）11月，《两台疏》上奏朝廷，礼部尚书徐阶在朝中竭力赞助，恳切说明建县的利害关系，尤其是耿定向为建县事更为出力。这样，在明嘉靖42年（1563年）3月13日经户部复奏，朝廷正式批准建县。从监生秦钺、李大夏在1542年提出建县到1563年正式批准建县，长达21年之久。&lt;br&gt;
-建县被批准之后，那么这个县叫什么名字呢？当时考虑到是“新”建立的一个县，为保持这个县的安定和安宁，就定名为“新安县”。不久，经人考证“新安”这块地区，春秋时期属于黄国管辖的地方，为求“地方宁谧，生民安妥”，就改称为“黄安”。因为“黄”字在过去是一个很吉利字眼和颜色。是中华民族的代表色。为什么？大家知道，我们是“炎黄子孙”，最早的帝王叫黄帝，黄色在“五行”中属土，典籍中记载有“五行，土为尊也”和“黄：中央之正色也”的说法，所以皇帝就职时被称为“黄袍加身”，表彰有功之臣时，就赠“黄马褂”一件，等等。我们有很多县名也都冠以“黄”字，如黄冈、黄陂、黄梅、黄州等 &lt;strong&gt;引注:此处说法不对&lt;/strong&gt;，所以将“新安”改名为“黄安”，就是这个道理。&lt;br&gt;
-为了明确黄安县的管辖范围，于是割麻城的太平、仙居两乡20里甲（110户为里，里分为10甲），黄陂的滠源乡8里甲，黄冈的上中和乡12里甲为新建县，也就是后来黄安县的管辖范围。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;当然，这也是一家之言，进来俗务缠身无法查证，若日后查证此处有误将会改正。&lt;/p&gt;
-&lt;h2 id=&#34;凑热闹来的黄石和黄梅&#34;&gt;凑热闹来的黄石和黄梅&lt;/h2&gt;
-&lt;p&gt;前面说到，黄石因色得名。历史上的黄石长期以来是一个镇，民国时叫做石黄镇(黄石港与石灰窑合称)，因附近石色黄的黄石矶得名。&lt;br&gt;
-黄梅就更简单了，隋开皇十八年（598年）改新蔡县为黄梅县。据《今县释名》：“黄梅山在西北，山多黄梅，以此名县。”&lt;/p&gt;
-&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
-&lt;p&gt;虽然看上去湖北有密度较高的黄*地名，但实际上确实有内因的仅有三个，可以算得上是一种巧合了。总之，经过这次较为漫长的搜索，越发觉得中华大地上每一片土地都承载着千年厚重的历史积淀。&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;各地名、黄夷、少昊维基百科页面&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://dbsmsw.com/rwdl/dmyl/2011-02-14/141.html&#34;&gt;黄冈各县市地名由来&lt;/a&gt; &lt;a href=&#34;https://web.archive.org/web/20181026072332/http://dbsmsw.com/rwdl/dmyl/2011-02-14/141.html&#34;&gt;防止链接失效的web archive链接&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.zhihu.com/question/50436054&#34;&gt;相同的知乎提问&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.hsdcw.com/sqks/?id=1&#34;&gt;黄石市地名由来&lt;/a&gt; &lt;a href=&#34;https://web.archive.org/web/20181026072646/http://www.hsdcw.com/sqks/?id=1&#34;&gt;Web Archive&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.sohu.com/a/224204011_778109&#34;&gt;红安县地名由来&lt;/a&gt; &lt;a href=&#34;https://web.archive.org/web/20181026072812/http://www.sohu.com/a/224204011_778109&#34;&gt;Web Archive&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://dfz.hg.gov.cn/shgc/lsdg/2011-05-05/97.html&#34;&gt;梁敢雄先生的考证之一&lt;/a&gt; &lt;a href=&#34;https://web.archive.org/web/20181026072943/http://dfz.hg.gov.cn/shgc/lsdg/2011-05-05/97.html&#34;&gt;Web Archive&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.wanfangdata.com.cn/details/detail.do?_type=perio&amp;amp;id=hgzyjsxyxb201201003&#34;&gt;梁敢雄先生的考证之二: 梁敢雄.黄州故城续考[J].黄冈职业技术学院学报,2012,(1):15-20. DOI:10.3969/j.issn.1672-1047.2012.01.03.&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-- https://blog.tpob.xyz/2018/10/26/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B9%96%E5%8C%97%E6%9C%89%E8%BF%99%E4%B9%88%E5%A4%9A%E9%BB%84%E5%9C%B0%E5%90%8D/ - </description>
         </item>
     
     

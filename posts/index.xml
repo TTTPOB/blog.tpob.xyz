@@ -6,7 +6,7 @@
     <description>Recent content in Posts on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 21 May 2021 19:37:00 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Oct 2021 18:43:09 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一些小脚本</title>
       <link>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
@@ -23,6 +23,18 @@ SGE集群(使用qsub的)查看自己限额 这个跟不同集群设置也有关�
 qconf -srqs quota_on_{队列名字} | grep {用户名} 安装R包缺动态链接库 参看这个回答，核心就是手动指定动态链接库
 withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&amp;#34;haven&amp;#34;), assignment=&amp;#34;+=&amp;#34;) 安装R包出现unable to load shared object &amp;hellip;&amp;hellip; haven.so: undefined symbol: libiconv ERROR: &amp;hellip;&amp;hellip; 错误 参看haven的issue，安装时使用withr::with_makevars(c(PKG_LIBS = &amp;ldquo;-liconv&amp;rdquo;), install.packages(&amp;ldquo;haven&amp;rdquo;), assignment = &amp;ldquo;+=&amp;quot;)即可。其它类似报错也可如法炮制。
 各种依赖ncurses的程序报缺so文件（libncurses.so.6, libtinfo.</description>
+    </item>
+    
+    <item>
+      <title>一台机器上有好几套conda怎么办</title>
+      <link>https://blog.tpob.xyz/2021/10/07/%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E6%9C%89%E5%A5%BD%E5%87%A0%E5%A5%97conda%E6%80%8E%E4%B9%88%E5%8A%9E/</link>
+      <pubDate>Thu, 07 Oct 2021 18:43:09 +0800</pubDate>
+      
+      <guid>https://blog.tpob.xyz/2021/10/07/%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E6%9C%89%E5%A5%BD%E5%87%A0%E5%A5%97conda%E6%80%8E%E4%B9%88%E5%8A%9E/</guid>
+      <description>其实这一篇也很水，可是又好几个月不更新了我能怎么办呢
+背景 故事是这样的：
+我们实验室用在我来之前就用全局安装的办法装了一套公用的conda，可是我当时没有管理员权限，不好换mamba或者进行类似的操作，所以用起来很难受，所以我就往自己的$HOME里装了自己的miniconda，但是给其它同学debug的时候经常要回到系统自带的conda环境里面，我就很烦，前两天就往自己的.zshrc里面写了个：
+function use_system_conda(){ __conda_setup=&amp;#34;$(&amp;#39;/lab_public/shared/applications/conda/miniconda3/bin/conda&amp;#39; &amp;#39;shell.bash&amp;#39; &amp;#39;hook&amp;#39; 2&amp;gt; /dev/null)&amp;#34; if [ $? -eq 0 ]; then eval &amp;#34;$__conda_setup&amp;#34; else if [ -f &amp;#34;/lab_public/shared/applications/conda/miniconda3/etc/profile.d/conda.sh&amp;#34; ]; then . &amp;#34;/lab_public/shared/applications/conda/miniconda3/etc/profile.d/conda.sh&amp;#34; else export PATH=&amp;#34;/lab_public/shared/applications/conda/miniconda3/bin:$PATH&amp;#34; fi fi unset __conda_setup export WHICH_CONDA__=&amp;#34;system conda&amp;#34; } function use_own_conda(){ __conda_setup=&amp;#34;$(&amp;#39;/home/my_user_name/anaconda/bin/conda&amp;#39; &amp;#39;shell.zsh&amp;#39; &amp;#39;hook&amp;#39; 2&amp;gt; /dev/null)&amp;#34; if [ $? -eq 0 ]; then eval &amp;#34;$__conda_setup&amp;#34; else if [ -f &amp;#34;/home/my_user_name/anaconda/etc/profile.d/conda.sh&amp;#34; ]; then . &amp;#34;/home/my_user_name/anaconda/etc/profile.d/conda.sh&amp;#34; else export PATH=&amp;#34;/home/my_user_name/anaconda/bin:$PATH&amp;#34; fi fi unset __conda_setup export WHICH_CONDA__=&amp;#34;own conda&amp;#34; } use_own_conda function get_which_conda(){ echo $WHICH_CONDA__ } PROMPT=&amp;#34;%F{blue}(\$(get_which_conda))%f$PROMPT&amp;#34; 这样就方便多了，我想用自己的conda就use_own_conda(默认)想用系统的conda就use_system_conda，最后面一行还往prompt里面加了个提示提醒我用的是哪一个(是的我今天用错了才加的)，如果有使用bash的同学想抄作业记得改一下设置prompt的操作，这个是zsh only的，它设置颜色什么的要方便一些。</description>
     </item>
     
     <item>
