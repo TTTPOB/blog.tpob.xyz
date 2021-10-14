@@ -270,7 +270,7 @@ p1&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style
 SRR000999
 SRR000998
 SRR000997
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后我们使用&lt;a href=&#34;https://gist.github.com/TTTPOB/9c52a1ebd10ee7383bda245663e252a0&#34;&gt;临时摸出来的这个脚本&lt;/a&gt;，和parallel，&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后我们使用&lt;a href=&#34;https://gist.github.com/TTTPOB/9c52a1ebd10ee7383bda245663e252a0&#34;&gt;临时摸出来的这个脚本&lt;/a&gt; &lt;code&gt;srr2fqgz.py&lt;/code&gt;，和parallel，&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;cat example.list|parallel SRR2fqgz.py | parallel aria2c -x16 -s16 &lt;span style=&#34;color:#f92672&#34;&gt;{}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;它应该就可以下好了&lt;/p&gt;
 - https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/ - </description>

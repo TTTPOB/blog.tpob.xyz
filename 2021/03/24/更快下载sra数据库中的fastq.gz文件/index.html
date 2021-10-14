@@ -253,7 +253,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 SRR000999
 SRR000998
 SRR000997
-</code></pre><p>然后我们使用<a href="https://gist.github.com/TTTPOB/9c52a1ebd10ee7383bda245663e252a0">临时摸出来的这个脚本</a>，和parallel，</p>
+</code></pre><p>然后我们使用<a href="https://gist.github.com/TTTPOB/9c52a1ebd10ee7383bda245663e252a0">临时摸出来的这个脚本</a> <code>srr2fqgz.py</code>，和parallel，</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat example.list|parallel SRR2fqgz.py | parallel aria2c -x16 -s16 <span style="color:#f92672">{}</span>
 </code></pre></div><p>它应该就可以下好了</p>
 

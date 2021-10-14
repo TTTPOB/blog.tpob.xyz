@@ -79,7 +79,7 @@ library(magrittr) library(grid) library(gridGraphics) library(ggplotify) ## 我�
       <description>啊狗屎ncbi的sra数据每次都要prefetch下下来再fastq-dump/fasterq-dump，真的是气死我了，prefetch还是单线程，在众所周知的网络环境下面的速度一言难尽&amp;hellip;
 好在ebi数据库不仅与ncbi同步更新而且还直接给了fastq.gz的下载链接，甚至有给你json api来根据accession number获取，所以我们可以有如下的操作。
 打开你需要的GSE页面进入SRA RUN Selector，下下来之后里面应该长这样
-cat example.list SRR000999 SRR000998 SRR000997 然后我们使用临时摸出来的这个脚本，和parallel，
+cat example.list SRR000999 SRR000998 SRR000997 然后我们使用临时摸出来的这个脚本 srr2fqgz.py，和parallel，
 cat example.list|parallel SRR2fqgz.py | parallel aria2c -x16 -s16 {} 它应该就可以下好了</description>
     </item>
     
