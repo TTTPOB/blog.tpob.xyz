@@ -18,9 +18,8 @@ SRR000999
 SRR000998
 SRR000997
 ```
-然后我们使用[临时摸出来的这个脚本](https://gist.github.com/TTTPOB/9c52a1ebd10ee7383bda245663e252a0)，和parallel，
+然后我们使用[临时摸出来的这个脚本](https://gist.github.com/TTTPOB/9c52a1ebd10ee7383bda245663e252a0) `srr2fqgz.py`，和parallel，
 ```bash
 cat example.list|parallel SRR2fqgz.py | parallel aria2c -x16 -s16 {}
 ```
 它应该就可以下好了
-
