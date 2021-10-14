@@ -6,7 +6,7 @@
     <description>Recent content in Posts on TPOB&#39;s Dustbin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 07 Oct 2021 18:43:09 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Oct 2021 21:55:34 +0800</lastBuildDate><atom:link href="https://blog.tpob.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>一些小脚本</title>
       <link>https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/</link>
@@ -23,6 +23,20 @@ SGE集群(使用qsub的)查看自己限额 这个跟不同集群设置也有关�
 qconf -srqs quota_on_{队列名字} | grep {用户名} 安装R包缺动态链接库 参看这个回答，核心就是手动指定动态链接库
 withr::with_makevars(c(PKG_LIBS=&amp;#34;-liconv&amp;#34;), install.packages(&amp;#34;haven&amp;#34;), assignment=&amp;#34;+=&amp;#34;) 安装R包出现unable to load shared object &amp;hellip;&amp;hellip; haven.so: undefined symbol: libiconv ERROR: &amp;hellip;&amp;hellip; 错误 参看haven的issue，安装时使用withr::with_makevars(c(PKG_LIBS = &amp;ldquo;-liconv&amp;rdquo;), install.packages(&amp;ldquo;haven&amp;rdquo;), assignment = &amp;ldquo;+=&amp;quot;)即可。其它类似报错也可如法炮制。
 各种依赖ncurses的程序报缺so文件（libncurses.so.6, libtinfo.</description>
+    </item>
+    
+    <item>
+      <title>更快获得srr accession</title>
+      <link>https://blog.tpob.xyz/2021/10/14/%E6%9B%B4%E5%BF%AB%E8%8E%B7%E5%BE%97srr-accession/</link>
+      <pubDate>Thu, 14 Oct 2021 21:55:34 +0800</pubDate>
+      
+      <guid>https://blog.tpob.xyz/2021/10/14/%E6%9B%B4%E5%BF%AB%E8%8E%B7%E5%BE%97srr-accession/</guid>
+      <description>上次我们在摸鱼的时候写了一个jio本来帮助我们从srr直接下载fastq.gz，但问题来了怎么快速拿到srr呢？有的时候(很多时候)NCBI自己的SRA Run Selector并不好用，并且我可能只是想下一个GSM样本对应的所有sra文件而已，这个时候在页面上点来点去就很麻烦，下下来之后还要自己对着网页重命名，眼睛都要瞎了，所以我今天又在摸鱼的时候写了另一个jio本，gist链接。
+上次我是想着为了尽量减少依赖就全用的标准库，requests都没用，直接用裸的urllib3写的，非常费劲，这次我决定节约一下我的大脑直接用httpx，BeautifoulSoup4，click，《非常现代》。
+大概的用法我相信能看到这个文章的人可以自己明白，比如你有一个gsm号码GSM1111111，你就
+#改名字，加PATH应该没有不会的吧（ get_srr gsm2srr GSM1111111 &amp;gt; GSM1111111.srr srr2fqgz GSM1111111.srr &amp;gt; GSM1111111.srr_linklist #aria2c下下来，wget啥的都行 aria2c -i GSM1111111.srr_linklist #记得校验 gzip -vt *gz #或许你还想把不同run的数据拼到一起 yes _1.fastq.gz|head -n `wc -l GSM1111111.srr` tr 1 2 _1 &amp;gt; _2 paste GSM1111111.srr _1 -d &amp;#34;&amp;#34; | xargs cat {} &amp;gt; {samplename}_R1.fastq.gz paste GSM1111111.srr _2 -d &amp;#34;&amp;#34; | xargs cat {} &amp;gt; {samplename}_R2.fastq.gz 这个命令就可以获得GSM1111111对应的所有srr，然后你就可以用cat GSM1111111.srr来获得所有srr，然后用srr2fqgz拿到地址，然后就aria2c一把梭，记得校验一下完整性。
+然后我在这里安利一下click，官网在这，相当好用，完全不需要大脑，比argparse好用一万倍。
+好了水完了。</description>
     </item>
     
     <item>

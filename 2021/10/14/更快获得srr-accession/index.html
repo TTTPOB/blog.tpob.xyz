@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html><head>
-	<meta name="generator" content="Hugo 0.80.0" />
-<title>TPOB&#39;s Dustbin</title>
+<title>更快获得srr accession</title>
 
 
-
-  
 
 
 <meta charset="utf-8">
@@ -72,7 +69,29 @@ if (!doNotTrack) {
 
 
 
+  
+    <script src="https://blog.tpob.xyz//js/toc-collapse.js"></script>
+  
 
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '7d6430b962cae7ed3df0',
+  clientSecret: 'f7e3d275d9c9861096206aa7711eb60270d6604a',
+  repo: 'blog.tpob.xyz',
+  owner: 'TTTPOB',
+  admin: ['TTTPOB'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -85,7 +104,7 @@ if (!doNotTrack) {
 <body>
     	<div id="app"><div ref="sideContainer" class="side-container">
     
-    <a class="a-block nav-head active" href="https://blog.tpob.xyz/">
+    <a class="a-block nav-head false" href="https://blog.tpob.xyz/">
     
         <div class="nav-title">
             TPOB&#39;s Dustbin
@@ -117,6 +136,11 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -134,24 +158,6 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
         </a>
         
         
-        
-            <div class="pagination-indicator">
-                <span style="text-align: center">
-                    1<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>2
-                </span>
-            </div>
-            
-            
-
-            
-            <a class="pagination-action" href="/page/2/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-            
-        
-        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -161,6 +167,11 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             
             
             
+            
+            <div class="toc">
+
+
+</div>
             
         </div>
     </div>
@@ -201,321 +212,97 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </div>
 
             <div id="content">
-
 <div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-no-background">
-        
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
             
-            <a href="https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                一些小脚本
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2018-11-27
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            
+            
 
-                        </div>
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    更快获得srr accession
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-10-14 21:55
+                        </time>
+                        
+
+                        
+
                         
                         
                     </div>
                 </div>
+            </div>
             
-        
-            
-            <a href="https://blog.tpob.xyz/2021/10/14/%E6%9B%B4%E5%BF%AB%E8%8E%B7%E5%BE%97srr-accession/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                更快获得srr accession
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-10-14
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <p>上次我们在摸鱼的时候写了<a href="https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/">一个jio本</a>来帮助我们从srr直接下载fastq.gz，但问题来了怎么快速拿到srr呢？有的时候(很多时候)NCBI自己的SRA Run Selector并不好用，并且我可能只是想下一个GSM样本对应的所有sra文件而已，这个时候在页面上点来点去就很麻烦，下下来之后还要自己对着网页重命名，眼睛都要瞎了，所以我今天又在摸鱼的时候写了另一个jio本，<a href="https://gist.github.com/TTTPOB/983ec24cf42a01b7802098ee6f117494">gist链接</a>。</p>
+<p>上次我是想着为了尽量减少依赖就全用的标准库，requests都没用，直接用裸的urllib3写的，非常费劲，这次我决定节约一下我的大脑直接用<code>httpx</code>，<code>BeautifoulSoup4</code>，<code>click</code>，《非常现代》。</p>
+<p>大概的用法我相信能看到这个文章的人可以自己明白，比如你有一个gsm号码<code>GSM1111111</code>，你就</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#改名字，加PATH应该没有不会的吧（</span>
+get_srr gsm2srr GSM1111111 &gt; GSM1111111.srr
+srr2fqgz GSM1111111.srr &gt; GSM1111111.srr_linklist
+<span style="color:#75715e">#aria2c下下来，wget啥的都行</span>
+aria2c -i GSM1111111.srr_linklist
+<span style="color:#75715e">#记得校验</span>
+gzip -vt *gz
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://blog.tpob.xyz/2021/10/07/%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E6%9C%89%E5%A5%BD%E5%87%A0%E5%A5%97conda%E6%80%8E%E4%B9%88%E5%8A%9E/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                一台机器上有好几套conda怎么办
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-10-07
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+<span style="color:#75715e">#或许你还想把不同run的数据拼到一起</span>
+yes _1.fastq.gz|head -n <span style="color:#e6db74">`</span>wc -l GSM1111111.srr<span style="color:#e6db74">`</span>
+tr <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> _1 &gt; _2
+paste GSM1111111.srr _1 -d <span style="color:#e6db74">&#34;&#34;</span> | xargs cat <span style="color:#f92672">{}</span> &gt; <span style="color:#f92672">{</span>samplename<span style="color:#f92672">}</span>_R1.fastq.gz 
+paste GSM1111111.srr _2 -d <span style="color:#e6db74">&#34;&#34;</span> | xargs cat <span style="color:#f92672">{}</span> &gt; <span style="color:#f92672">{</span>samplename<span style="color:#f92672">}</span>_R2.fastq.gz 
+</code></pre></div><p>这个命令就可以获得GSM1111111对应的所有srr，然后你就可以用<code>cat GSM1111111.srr</code>来获得所有srr，然后用<code>srr2fqgz</code>拿到地址，然后就<code>aria2c</code>一把梭，记得校验一下完整性。</p>
+<p>然后我在这里安利一下<code>click</code>，<a href="https://click.palletsprojects.com/">官网在这</a>，相当好用，完全不需要大脑，比<code>argparse</code>好用一万倍。</p>
+<p>好了水完了。</p>
 
-                        </div>
-                        
-                        
-                    </div>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2021-10-14</p>
+                    
                 </div>
+            </div>
             
-        
             
-            <a href="https://blog.tpob.xyz/2021/05/21/%E6%9C%89%E4%B8%80%E4%BA%9B%E4%BA%BA%E4%BB%96%E4%BC%9A%E7%8A%AF%E4%B8%80%E4%BA%9B%E5%BE%88%E6%84%9A%E8%A0%A2%E7%9A%84%E9%94%99%E8%AF%AF-1/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                有一些人他会犯一些很愚蠢的错误-1
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-05-21
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <nav class="post-pagination">
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://blog.tpob.xyz/2021/04/28/%E5%91%BD%E4%BB%A4%E8%A1%8Cmarkdown%E6%B8%B2%E6%9F%93%E5%B7%A5%E5%85%B7glow/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                命令行markdown渲染工具glow
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-04-28
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                
+                <a class="newer-posts" href="https://blog.tpob.xyz/2018/11/27/%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%84%9A%E6%9C%AC/">
+			Next<br>一些小脚本
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://blog.tpob.xyz/2021/10/07/%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E6%9C%89%E5%A5%BD%E5%87%A0%E5%A5%97conda%E6%80%8E%E4%B9%88%E5%8A%9E/">
+			Previous<br>一台机器上有好几套conda怎么办
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://blog.tpob.xyz/2021/03/24/%E6%9B%B4%E5%BF%AB%E4%B8%8B%E8%BD%BDsra%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84fastq.gz%E6%96%87%E4%BB%B6/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                更快下载sra数据库中的fastq.gz文件
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-03-24
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://blog.tpob.xyz/2020/12/11/%E5%9C%A8wsl2%E4%B8%8A%E4%BF%AE%E5%A5%BD%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84x11%E8%BD%AC%E5%8F%91/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                在WSL2上修好到服务器的X11转发
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2020-12-11
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+<div id="gitalk-container"></div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://blog.tpob.xyz/2020/05/21/onedrive-app-%E8%87%AA%E5%8A%A8%E5%A4%87%E4%BB%BD%E7%9A%84%E6%96%87%E4%BB%B6%E6%95%B4%E7%90%86%E8%84%9A%E6%9C%AC/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                OneDrive app 自动备份的文件整理脚本
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2020-05-21
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://blog.tpob.xyz/2018/12/03/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%8D%E5%BC%80%E6%83%B3%E8%A6%81%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%9B%86%E7%BE%A4%E4%B8%8A%E7%BC%96%E8%AF%91r/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                如果你想不开想要在公司集群上编译R
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2018-12-03
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://blog.tpob.xyz/2018/12/02/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84pubmed%E6%91%98%E8%A6%81%E7%88%AC%E8%99%AB/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                一个简陋的pubmed摘要爬虫
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2018-12-02
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-        </a>
+
+
+            </div>
+        </div>
     </div>
 </div>
 
-            </div>
-
-<div class="pagination">
-    
-    <a class="pagination-action" style="opacity:0">
-    
-        <i class="material-icons pagination-action-icon">
-            chevron_left
-        </i>
-    </a>
-
-        <div class="pagination-indicator">
-            <span>1/2</span>
-        </div>
-
-        
-        <a class="pagination-action" href="/page/2/"
-           style="opacity:1">
-        
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-</div>
-
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
