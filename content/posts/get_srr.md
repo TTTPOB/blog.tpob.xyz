@@ -21,8 +21,9 @@ gzip -vt *gz
 #或许你还想把不同run的数据拼到一起
 yes _1.fastq.gz|head -n `wc -l GSM1111111.srr`
 tr 1 2 _1 > _2
-paste GSM1111111.srr _1 -d "" | xargs cat {} > {samplename}_R1.fastq.gz 
-paste GSM1111111.srr _2 -d "" | xargs cat {} > {samplename}_R2.fastq.gz 
+# 直接用sed更简单
+paste GSM1111111.srr _1 -d "" | xargs cat  > {samplename}_R1.fastq.gz 
+paste GSM1111111.srr _2 -d "" | xargs cat  > {samplename}_R2.fastq.gz 
 ```
 这个命令就可以获得GSM1111111对应的所有srr，然后你就可以用`cat GSM1111111.srr`来获得所有srr，然后用`srr2fqgz`拿到地址，然后就`aria2c`一把梭，记得校验一下完整性。
 
