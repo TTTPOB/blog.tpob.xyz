@@ -258,8 +258,9 @@ gzip -vt *gz
 <span style="color:#75715e">#或许你还想把不同run的数据拼到一起</span>
 yes _1.fastq.gz|head -n <span style="color:#e6db74">`</span>wc -l GSM1111111.srr<span style="color:#e6db74">`</span>
 tr <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> _1 &gt; _2
-paste GSM1111111.srr _1 -d <span style="color:#e6db74">&#34;&#34;</span> | xargs cat <span style="color:#f92672">{}</span> &gt; <span style="color:#f92672">{</span>samplename<span style="color:#f92672">}</span>_R1.fastq.gz 
-paste GSM1111111.srr _2 -d <span style="color:#e6db74">&#34;&#34;</span> | xargs cat <span style="color:#f92672">{}</span> &gt; <span style="color:#f92672">{</span>samplename<span style="color:#f92672">}</span>_R2.fastq.gz 
+<span style="color:#75715e"># 直接用sed更简单</span>
+paste GSM1111111.srr _1 -d <span style="color:#e6db74">&#34;&#34;</span> | xargs cat  &gt; <span style="color:#f92672">{</span>samplename<span style="color:#f92672">}</span>_R1.fastq.gz 
+paste GSM1111111.srr _2 -d <span style="color:#e6db74">&#34;&#34;</span> | xargs cat  &gt; <span style="color:#f92672">{</span>samplename<span style="color:#f92672">}</span>_R2.fastq.gz 
 </code></pre></div><p>这个命令就可以获得GSM1111111对应的所有srr，然后你就可以用<code>cat GSM1111111.srr</code>来获得所有srr，然后用<code>srr2fqgz</code>拿到地址，然后就<code>aria2c</code>一把梭，记得校验一下完整性。</p>
 <p>然后我在这里安利一下<code>click</code>，<a href="https://click.palletsprojects.com/">官网在这</a>，相当好用，完全不需要大脑，比<code>argparse</code>好用一万倍。</p>
 <p>好了水完了。</p>

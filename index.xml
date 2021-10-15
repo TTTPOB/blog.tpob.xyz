@@ -160,8 +160,9 @@ gzip -vt *gz
 &lt;span style=&#34;color:#75715e&#34;&gt;#或许你还想把不同run的数据拼到一起&lt;/span&gt;
 yes _1.fastq.gz|head -n &lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;wc -l GSM1111111.srr&lt;span style=&#34;color:#e6db74&#34;&gt;`&lt;/span&gt;
 tr &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt; _1 &amp;gt; _2
-paste GSM1111111.srr _1 -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; | xargs cat &lt;span style=&#34;color:#f92672&#34;&gt;{}&lt;/span&gt; &amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;samplename&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;_R1.fastq.gz 
-paste GSM1111111.srr _2 -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; | xargs cat &lt;span style=&#34;color:#f92672&#34;&gt;{}&lt;/span&gt; &amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;samplename&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;_R2.fastq.gz 
+&lt;span style=&#34;color:#75715e&#34;&gt;# 直接用sed更简单&lt;/span&gt;
+paste GSM1111111.srr _1 -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; | xargs cat  &amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;samplename&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;_R1.fastq.gz 
+paste GSM1111111.srr _2 -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; | xargs cat  &amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;samplename&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;_R2.fastq.gz 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个命令就可以获得GSM1111111对应的所有srr，然后你就可以用&lt;code&gt;cat GSM1111111.srr&lt;/code&gt;来获得所有srr，然后用&lt;code&gt;srr2fqgz&lt;/code&gt;拿到地址，然后就&lt;code&gt;aria2c&lt;/code&gt;一把梭，记得校验一下完整性。&lt;/p&gt;
 &lt;p&gt;然后我在这里安利一下&lt;code&gt;click&lt;/code&gt;，&lt;a href=&#34;https://click.palletsprojects.com/&#34;&gt;官网在这&lt;/a&gt;，相当好用，完全不需要大脑，比&lt;code&gt;argparse&lt;/code&gt;好用一万倍。&lt;/p&gt;
 &lt;p&gt;好了水完了。&lt;/p&gt;
